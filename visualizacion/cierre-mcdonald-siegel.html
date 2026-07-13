@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El valor de esperar a invertir — McDonald &amp; Siegel (1986)</title>
+<style>
+  /* ============ Paleta slutsky (del deck) + tokens theme-aware ============ */
+  :root{
+    --navy:#002060; --rojo:#EA0000; --azul:#0634B6; --azulclaro:#0070C0;
+    --celeste:#E0F7FF; --magenta:#F21AD8;
+    /* tokens */
+    --bg:#f6f8fc;
+    --surface:#ffffff;
+    --surface-2:#eef2f9;
+    --ink:#111a2e;
+    --ink-2:#465066;
+    --ink-3:#8994a8;
+    --line:#dce3ef;
+    --line-2:#c7d0e0;
+    --accent:var(--rojo);        /* resultado / C* */
+    --expr:var(--azul);          /* expresión / curva de opción */
+    --wait-fill:rgba(6,52,182,.10);
+    --invest:var(--azulclaro);
+    --pay:#7c8aa5;               /* payoff VAN, recesivo */
+    --shadow:0 1px 2px rgba(16,28,54,.06),0 8px 24px rgba(16,28,54,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0a1122; --surface:#0f1830; --surface-2:#152142;
+      --ink:#e8edf7; --ink-2:#a6b1c8; --ink-3:#6b778f;
+      --line:#22314f; --line-2:#31436b;
+      --accent:#ff5a4d; --expr:#5b8bff; --azulclaro:#39a7ff; --invest:#39a7ff;
+      --celeste:#12213e; --wait-fill:rgba(91,139,255,.16); --pay:#8595b0;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f8fc; --surface:#ffffff; --surface-2:#eef2f9;
+    --ink:#111a2e; --ink-2:#465066; --ink-3:#8994a8; --line:#dce3ef; --line-2:#c7d0e0;
+    --accent:var(--rojo); --expr:var(--azul); --azulclaro:#0070C0; --invest:#0070C0;
+    --celeste:#E0F7FF; --wait-fill:rgba(6,52,182,.10); --pay:#7c8aa5;
+    --shadow:0 1px 2px rgba(16,28,54,.06),0 8px 24px rgba(16,28,54,.06);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0a1122; --surface:#0f1830; --surface-2:#152142;
+    --ink:#e8edf7; --ink-2:#a6b1c8; --ink-3:#6b778f; --line:#22314f; --line-2:#31436b;
+    --accent:#ff5a4d; --expr:#5b8bff; --azulclaro:#39a7ff; --invest:#39a7ff;
+    --celeste:#12213e; --wait-fill:rgba(91,139,255,.16); --pay:#8595b0;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Carlito,Calibri,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+    padding:clamp(14px,3vw,34px);
+  }
+  .wrap{max-width:1120px;margin:0 auto}
+  .serif{font-family:"STIX Two Text",Cambria,"Times New Roman",Georgia,serif}
+  .math{font-family:"STIX Two Math","STIX Two Text",Cambria,Georgia,serif;font-style:italic}
+  .rj{color:var(--accent)} .az{color:var(--expr)} .nv{color:var(--ink)}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* ---------- header ---------- */
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+  h1{font-size:clamp(20px,3.4vw,30px);line-height:1.12;margin:0 0 4px;letter-spacing:-.01em;text-wrap:balance}
+  .sub{color:var(--ink-2);font-size:14px;margin:0}
+  .sub b{color:var(--ink);font-weight:600}
+  .theme-btn{
+    border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);
+    border-radius:9px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap;
+  }
+  .theme-btn:hover{border-color:var(--azulclaro);color:var(--ink)}
+
+  /* ---------- stat row ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 16px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:12px 14px;box-shadow:var(--shadow)}
+  .stat .k{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+  .stat .v{font-size:clamp(22px,3.6vw,30px);font-weight:600;line-height:1;letter-spacing:-.02em}
+  .stat .u{font-size:12px;color:var(--ink-2);margin-top:5px;min-height:1.2em}
+  .stat.hero .v{color:var(--accent)}
+  .stat.hero{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));background:color-mix(in srgb,var(--accent) 6%,var(--surface))}
+  .dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+  /* ---------- main layout ---------- */
+  .grid{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+  .panel{padding:8px 8px 4px}
+  .tabs{display:flex;gap:6px;padding:12px 14px 0}
+  .tab{flex:1;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);
+       border-radius:11px 11px 0 0;padding:10px 12px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+       border-bottom:none;line-height:1.2;text-align:left}
+  .tab small{display:block;font-weight:400;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+  .tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:inset 0 3px 0 var(--accent)}
+  .view{display:none;padding:6px 14px 14px}
+  .view[data-active="true"]{display:block}
+  figure{margin:0}
+  svg{display:block;width:100%;height:auto}
+  canvas{display:block;width:100%;height:auto;border-radius:10px}
+  figcaption{color:var(--ink-2);font-size:12.5px;margin-top:10px;padding:0 2px;min-height:2.4em}
+  figcaption b{color:var(--ink)}
+  .rowbtns{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}
+
+  /* ---------- controls ---------- */
+  .controls{padding:16px}
+  .controls h2{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px;font-weight:600}
+  .seg{display:flex;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:3px;margin-bottom:6px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--ink-2);border-radius:8px;padding:9px 8px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;line-height:1.15}
+  .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+  .mode-note{font-size:11.5px;color:var(--ink-3);margin:2px 2px 14px;min-height:1.4em}
+
+  .ctl{margin-bottom:13px}
+  .ctl .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:5px}
+  .ctl .lab .nm{color:var(--ink-2)} .ctl .lab .nm b{color:var(--ink)}
+  .ctl .lab .val{font-variant-numeric:tabular-nums;color:var(--expr);font-weight:600}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:99px;background:var(--line-2);outline:none;margin:6px 0}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--surface);border:2px solid var(--azulclaro);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--surface);border:2px solid var(--azulclaro);cursor:pointer}
+  input[type=range]:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb,var(--azulclaro) 35%,transparent)}
+
+  .presets{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px}
+  .preset{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:9px;padding:8px 7px;font:inherit;font-size:11.5px;font-weight:600;cursor:pointer;line-height:1.2;text-align:left}
+  .preset:hover{border-color:var(--accent);color:var(--ink)}
+  .preset small{display:block;font-weight:400;color:var(--ink-3);font-size:10.5px;margin-top:1px}
+  hr.sep{border:0;border-top:1px solid var(--line);margin:15px 0}
+
+  .takeaway{margin-top:16px;background:var(--celeste);border:1px solid color-mix(in srgb,var(--azulclaro) 45%,var(--line));border-radius:14px;padding:14px 16px}
+  .takeaway p{margin:0;font-size:14px;line-height:1.5;color:var(--ink)}
+  .takeaway .big{color:var(--accent);font-weight:700}
+
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:2px 2px 0;font-size:12px;color:var(--ink-2)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .lk{width:20px;height:0;border-top-width:3px;border-top-style:solid;display:inline-block}
+
+  .foot{color:var(--ink-3);font-size:11.5px;margin-top:20px;text-align:center}
+  .foot b{color:var(--ink-2);font-weight:600}
+
+  @media (max-width:860px){
+    .grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>El valor de esperar a invertir</h1>
+      <p class="sub"><b>McDonald &amp; Siegel (1986)</b> — invertir cuando el VAN&gt;0 es un error: lo óptimo es esperar hasta <span class="math">V</span> ≥ <span class="math rj">C*</span>·<span class="math">F</span>, con <span class="math rj">C*</span> = <span class="math">ε</span>/(<span class="math">ε</span>−1) &gt; 1.</p>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button">◐ Tema</button>
+  </header>
+
+  <!-- ===== live readouts ===== -->
+  <div class="stats">
+    <div class="stat">
+      <div class="k"><span>Exponente</span></div>
+      <div class="v"><span class="math">ε</span> = <span class="tnum" id="s-eps">2.16</span></div>
+      <div class="u">raíz &gt;1 de la cuadrática</div>
+    </div>
+    <div class="stat hero">
+      <div class="k"><span>Umbral óptimo</span></div>
+      <div class="v"><span class="math">C*</span> = <span class="tnum" id="s-cstar">1.86</span></div>
+      <div class="u" id="s-cstar-u">invertir recién en <span class="tnum">V = 1.86·F</span></div>
+    </div>
+    <div class="stat">
+      <div class="k"><span>Valor de la opción</span></div>
+      <div class="v"><span class="math az">X</span> = <span class="tnum" id="s-x">0.23</span></div>
+      <div class="u" id="s-x-u">por dólar de proyecto, en V=F</div>
+    </div>
+    <div class="stat">
+      <div class="k"><span>Se destruye si VAN=0</span></div>
+      <div class="v"><span class="tnum" id="s-loss">23</span>%</div>
+      <div class="u">del valor, por invertir al cruzar</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- ===== charts ===== -->
+    <div class="card">
+      <div class="tabs" role="tablist">
+        <button class="tab" id="tab2" role="tab" aria-selected="true" aria-controls="view2">
+          ¿Hasta cuándo esperar?<small>el umbral C* y el valor de esperar</small>
+        </button>
+        <button class="tab" id="tab1" role="tab" aria-selected="false" aria-controls="view1">
+          ¿Por qué esperar?<small>la asimetría: conservás la cola buena</small>
+        </button>
+      </div>
+
+      <!-- VISTA 2 — hero -->
+      <section class="view" id="view2" role="tabpanel" data-active="true" aria-labelledby="tab2">
+        <div class="legend">
+          <span><i class="lk" style="border-color:var(--pay);border-top-style:dashed"></i>Payoff del VAN <span class="math">max(V/F−1,0)</span></span>
+          <span><i class="lk" style="border-color:var(--expr)"></i>Valor de la opción <span class="math">X</span></span>
+          <span><i class="lk" style="border-color:var(--accent)"></i><span class="math">C*</span> óptimo</span>
+        </div>
+        <figure>
+          <svg id="svg2" viewBox="0 0 720 452" role="img" aria-label="Curva del valor de la opción por encima del payoff del VAN, tangente en el umbral óptimo C*."></svg>
+          <div class="rowbtns">
+            <figcaption id="cap2"></figcaption>
+          </div>
+        </figure>
+      </section>
+
+      <!-- VISTA 1 — asimetría -->
+      <section class="view" id="view1" role="tabpanel" aria-labelledby="tab1">
+        <div class="legend">
+          <span><i class="lk" style="border-color:var(--invest)"></i>invirtió (cruzó <span class="math">C*</span>)</span>
+          <span><i class="lk" style="border-color:var(--pay)"></i>esperó / descartó</span>
+          <span><i class="lk" style="border-color:var(--accent)"></i><span class="math">C*</span></span>
+          <span><i class="lk" style="border-color:var(--ink-3);border-top-style:dashed"></i>VAN=0</span>
+        </div>
+        <figure>
+          <canvas id="cv1" width="720" height="430" aria-label="Abanico de trayectorias del valor del proyecto; las que cruzan C* invierten capturando la subida, el resto se descarta."></canvas>
+          <div class="rowbtns">
+            <figcaption id="cap1"></figcaption>
+            <button class="theme-btn" id="regen" type="button">↻ Regenerar</button>
+          </div>
+        </figure>
+      </section>
+    </div>
+
+    <!-- ===== controls ===== -->
+    <aside class="card controls">
+      <h2>Parametrización</h2>
+      <div class="seg" role="group" aria-label="Modo de parametrización">
+        <button id="modeD" type="button" aria-pressed="true">Caso base del paper<br>(δ · tablas)</button>
+        <button id="modeA" type="button" aria-pressed="false">Ejemplo corrido<br>(α · ε=√5)</button>
+      </div>
+      <div class="mode-note" id="modeNote"></div>
+
+      <div id="sliders"></div>
+
+      <hr class="sep">
+      <h2>Presets</h2>
+      <div class="presets" id="presets"></div>
+
+      <div class="takeaway"><p id="takeaway"></p></div>
+    </aside>
+  </div>
+
+  <p class="foot">Fórmulas: ε de la cuadrática característica (ec. 5 / ec. 12), <b>C* = ε/(ε−1)</b>, <b>X = (C*−1)·F₀·((V₀/F₀)/C*)^ε</b>. Reproduce las Tablas I–II del paper. · Trabajo final — Finanzas Matemáticas, UCEMA.</p>
+</div>
+
+<script>
+"use strict";
+(function(){
+  /* ============================ estado ============================ */
+  const state = {
+    mode: "delta",
+    // delta-form (tablas)
+    sv2:0.04, sf2:0.04, rho:0, dv:0.10, df:0.10, lam:0,
+    // alpha-form (F constante, ejemplo)
+    mu:0.10, av:0.02, sv:0.20, lamA:0,
+    F0:50, V0:70,           // millones (solo modo alpha, para los montos)
+    ratio:1.00              // V/F "actual" (marcador)
+  };
+
+  /* ===================== motor de cálculo ===================== */
+  // devuelve {eps, cstar, sigma2, valid, optAt(r)->valor opción, payAt(r), Xatratio}
+  function model(){
+    let sigma2, eps, m;
+    if(state.mode==="delta"){
+      sigma2 = state.sv2 + state.sf2 - 2*state.rho*Math.sqrt(state.sv2*state.sf2);
+      m = (state.df - state.dv)/sigma2;                 // parte lineal usa df pelado
+      const under = (m-0.5)*(m-0.5) + 2*(state.df + state.lam)/sigma2;  // λ suma a df en el término constante
+      eps = Math.sqrt(under) + (0.5 - m);
+    } else {
+      sigma2 = state.sv*state.sv;                        // F constante: σ² = σ_v²
+      const k = state.av/sigma2;                         // (α_v−α_f)/σ² con α_f=0
+      const under = (k-0.5)*(k-0.5) + 2*(state.mu + state.lamA)/sigma2;
+      eps = Math.sqrt(under) + (0.5 - k);
+    }
+    const valid = eps>1.0000001 && isFinite(eps);
+    const cstar = valid ? eps/(eps-1) : Infinity;
+    const F0 = state.mode==="alpha" ? state.F0 : 1;
+    // valor de la opción por dólar de F (o en millones si modo alpha usa F0)
+    function optAt(r){                                   // r = V/F
+      if(!valid) return NaN;
+      if(r>=cstar) return (r-1);                         // ya invertiste: intrínseco
+      return (cstar-1)*Math.pow(r/cstar, eps);
+    }
+    function payAt(r){ return Math.max(r-1,0); }
+    const Xunit = valid ? optAt(1) : NaN;                // opción en V=F (=celda Tabla I)
+    return {sigma2,eps,cstar,valid,optAt,payAt,Xunit,F0};
+  }
+
+  /* ============================ formato ============================ */
+  const f2=x=>x.toFixed(2), f3=x=>x.toFixed(3);
+  const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+
+  /* ===================== render: readouts ===================== */
+  function renderStats(md){
+    document.getElementById("s-eps").textContent   = md.valid? f2(md.eps) : "—";
+    document.getElementById("s-cstar").textContent = md.valid? f2(md.cstar) : "∞";
+    document.getElementById("s-cstar-u").innerHTML = md.valid
+      ? 'invertir recién en <span class="tnum">V = '+f2(md.cstar)+'·F</span>'
+      : 'δ_v→0: nunca conviene invertir';
+    document.getElementById("s-x").textContent     = md.valid? f2(md.Xunit) : "—";
+    document.getElementById("s-x-u").textContent   = state.mode==="alpha"
+      ? "≈ "+f2(md.Xunit*state.F0)+"M de opción en V=F" : "por dólar de proyecto, en V=F";
+    document.getElementById("s-loss").textContent  = md.valid? Math.round(md.Xunit*100) : "—";
+  }
+
+  /* ===================== render: takeaway + captions ===================== */
+  function renderText(md){
+    const tk=document.getElementById("takeaway");
+    if(!md.valid){
+      tk.innerHTML='Con estos parámetros <span class="math">δ_v</span>≤0: la opción vale infinito y <b>nunca</b> conviene invertir (caso degenerado que el paper excluye).';
+    } else {
+      const loss=Math.round(md.Xunit*100);
+      tk.innerHTML='Conviene esperar hasta que el proyecto valga <span class="big">'+f2(md.cstar)+'×</span> el costo. '+
+        'Invertir apenas el VAN se hace positivo tira <span class="big">'+loss+'%</span> del valor: eso es la opción de esperar que se estaba ejerciendo gratis.';
+    }
+    // Vista 2 caption
+    const c2=document.getElementById("cap2");
+    if(md.valid){
+      const oi=md.optAt(state.ratio), pi=md.payAt(state.ratio);
+      const gap=oi-pi;
+      const pct = pi>1e-6 ? " (+"+Math.round(gap/pi*100)+"% sobre el VAN inmediato)" : "";
+      const money = state.mode==="alpha" ? " · en montos: opción ≈ "+f2(oi*state.F0)+"M vs. VAN "+f2(Math.max(pi,0)*state.F0)+"M" : "";
+      c2.innerHTML='La curva azul (opción viva) va siempre por encima del palo de hockey (VAN) y lo toca con tangencia en <b>C*='+f2(md.cstar)+'</b> (smooth-pasting). '+
+        'En <span class="math">V/F</span>='+f2(state.ratio)+', esperar vale <b>'+f3(gap)+'</b>'+pct+'.'+money;
+    } else { c2.textContent="Sin umbral finito con estos parámetros."; }
+  }
+
+  /* ===================== render: Vista 2 (SVG) ===================== */
+  const NS="http://www.w3.org/2000/svg";
+  function el(n,a){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;}
+  function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+
+  function renderSVG(md){
+    const svg=document.getElementById("svg2"); svg.textContent="";
+    const W=720,H=452, mL=52,mR=20,mT=18,mB=42;
+    const x0=mL,x1=W-mR,y0=H-mB,y1=mT;
+    const inkishGrid=css('--line'), ink2=css('--ink-2'), ink3=css('--ink-3');
+    const cPay=css('--pay'), cOpt=css('--expr'), cAcc=css('--accent'), cWait=css('--wait-fill');
+
+    const xMax = md.valid ? clamp(md.cstar*1.45, 3, 6) : 3.5;
+    const yMax = Math.max( (xMax-1), md.valid?md.optAt(0.001):0.5 )*1.06 + 0.02;
+    const X=r=>x0+(r/xMax)*(x1-x0);
+    const Y=v=>y0-(v/yMax)*(y0-y1);
+
+    // grid + ejes
+    for(let gx=0;gx<=xMax+1e-9;gx+=0.5){
+      svg.appendChild(el("line",{x1:X(gx),y1:y1,x2:X(gx),y2:y0,stroke:inkishGrid,"stroke-width":1}));
+      svg.appendChild(el("text",{x:X(gx),y:y0+16,fill:ink3,"font-size":11,"text-anchor":"middle","font-variant-numeric":"tabular-nums"})).textContent=gx.toFixed(1);
+    }
+    const yStep = yMax>2?0.5:(yMax>1?0.25:0.1);
+    for(let gy=0;gy<=yMax+1e-9;gy+=yStep){
+      svg.appendChild(el("line",{x1:x0,y1:Y(gy),x2:x1,y2:Y(gy),stroke:inkishGrid,"stroke-width":1}));
+      svg.appendChild(el("text",{x:x0-8,y:Y(gy)+3.5,fill:ink3,"font-size":11,"text-anchor":"end","font-variant-numeric":"tabular-nums"})).textContent=gy.toFixed(2);
+    }
+    // rótulos de ejes
+    svg.appendChild(el("text",{x:(x0+x1)/2,y:H-6,fill:ink2,"font-size":12,"text-anchor":"middle"})).textContent="V / F  (valor del proyecto ÷ costo)";
+    const yl=el("text",{x:14,y:(y0+y1)/2,fill:ink2,"font-size":12,"text-anchor":"middle",transform:"rotate(-90 14 "+(y0+y1)/2+")"});yl.textContent="valor por dólar de F";svg.appendChild(yl);
+
+    if(!md.valid){
+      svg.appendChild(el("text",{x:(x0+x1)/2,y:(y0+y1)/2,fill:cAcc,"font-size":15,"text-anchor":"middle"})).textContent="δv ≤ 0 ⇒ C* → ∞ (nunca invertir)";
+      return;
+    }
+
+    // ---- área "valor de esperar" (opción − payoff) sobre [0, C*] ----
+    let dArea="M "+X(0)+" "+Y(0);
+    const N=160;
+    for(let i=0;i<=N;i++){const r=md.cstar*i/N; dArea+=" L "+X(r)+" "+Y(md.optAt(r));}
+    for(let i=N;i>=0;i--){const r=md.cstar*i/N; dArea+=" L "+X(r)+" "+Y(md.payAt(r));}
+    dArea+=" Z";
+    svg.appendChild(el("path",{d:dArea,fill:cWait,stroke:"none"}));
+
+    // ---- payoff VAN (palo de hockey), gris punteado ----
+    svg.appendChild(el("path",{d:"M "+X(0)+" "+Y(0)+" L "+X(1)+" "+Y(0)+" L "+X(xMax)+" "+Y(xMax-1),
+      fill:"none",stroke:cPay,"stroke-width":2,"stroke-dasharray":"6 5","stroke-linejoin":"round"}));
+
+    // ---- curva de la opción (azul) ----
+    let dOpt="M "+X(0)+" "+Y(md.optAt(0));
+    const M=240;
+    for(let i=1;i<=M;i++){const r=xMax*i/M; dOpt+=" L "+X(r)+" "+Y(md.optAt(r));}
+    svg.appendChild(el("path",{d:dOpt,fill:"none",stroke:cOpt,"stroke-width":2.6,"stroke-linejoin":"round","stroke-linecap":"round"}));
+
+    // ---- líneas verticales: V/F=1 (VAN) y C* ----
+    svg.appendChild(el("line",{x1:X(1),y1:y1,x2:X(1),y2:y0,stroke:ink3,"stroke-width":1.5,"stroke-dasharray":"4 4"}));
+    svg.appendChild(el("text",{x:X(1)+4,y:y1+12,fill:ink2,"font-size":11})).textContent="VAN=0";
+    svg.appendChild(el("line",{x1:X(md.cstar),y1:Y(md.cstar-1),x2:X(md.cstar),y2:y0,stroke:cAcc,"stroke-width":2}));
+    const cl=el("text",{x:X(md.cstar)+5,y:y1+12,fill:cAcc,"font-size":12,"font-weight":700});cl.textContent="C* = "+f2(md.cstar);svg.appendChild(cl);
+    // punto de tangencia
+    svg.appendChild(el("circle",{cx:X(md.cstar),cy:Y(md.cstar-1),r:4.5,fill:cAcc,stroke:css('--surface'),"stroke-width":2}));
+
+    // ---- marcador V/F actual: gap opción vs payoff ----
+    const r=state.ratio, oy=Y(md.optAt(r)), py=Y(md.payAt(r));
+    svg.appendChild(el("line",{x1:X(r),y1:oy,x2:X(r),y2:py,stroke:cAcc,"stroke-width":2.5,"stroke-linecap":"round",opacity:.85}));
+    svg.appendChild(el("circle",{cx:X(r),cy:py,r:3.6,fill:cPay,stroke:css('--surface'),"stroke-width":1.5}));
+    svg.appendChild(el("circle",{cx:X(r),cy:oy,r:4.5,fill:cOpt,stroke:css('--surface'),"stroke-width":2}));
+    // etiqueta del gap
+    const gap=md.optAt(r)-md.payAt(r);
+    const lx=X(r)>x1-90?X(r)-8:X(r)+8, anc=X(r)>x1-90?"end":"start";
+    const gl=el("text",{x:lx,y:(oy+py)/2+4,fill:cAcc,"font-size":11.5,"font-weight":700,"text-anchor":anc,"font-variant-numeric":"tabular-nums"});
+    gl.textContent="esperar +"+f3(gap);svg.appendChild(gl);
+  }
+
+  /* ===================== render: Vista 1 (canvas) ===================== */
+  let seed=12345;
+  function rng(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+  function gauss(){let u=0,v=0;while(u===0)u=rng();while(v===0)v=rng();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+
+  function renderCanvas(md){
+    const cv=document.getElementById("cv1");
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const W=cv.clientWidth||720, H=430;
+    cv.width=W*dpr; cv.height=H*dpr;
+    const ctx=cv.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+    const mL=44,mR=14,mT=14,mB=30;
+    const x0=mL,x1=W-mR,y0=H-mB,y1=mT;
+    const cGrid=css('--line'), ink3=css('--ink-3'), ink2=css('--ink-2');
+    const cAcc=css('--accent'), cInv=css('--invest'), cWait=css('--pay');
+
+    const cstar = md.valid?md.cstar:2;
+    const yMax = Math.max(cstar*1.5, 2.6);
+    const Yr=v=>y0-(v/yMax)*(y0-y1);
+    const steps=64, T=8, dt=T/steps;
+    const Xt=i=>x0+(i/steps)*(x1-x0);
+
+    // grid horizontal
+    ctx.font="11px -apple-system,Segoe UI,sans-serif"; ctx.textBaseline="middle";
+    for(let gy=0;gy<=yMax+1e-9;gy+=0.5){
+      ctx.strokeStyle=cGrid;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x0,Yr(gy));ctx.lineTo(x1,Yr(gy));ctx.stroke();
+      ctx.fillStyle=ink3;ctx.textAlign="right";ctx.fillText(gy.toFixed(1),x0-7,Yr(gy));
+    }
+    ctx.textAlign="center";ctx.fillStyle=ink2;ctx.fillText("tiempo →",(x0+x1)/2,H-9);
+
+    // volatilidad y drift del ratio
+    const sigma=Math.sqrt(Math.max(md.sigma2,1e-6));
+    let drift;
+    if(state.mode==="alpha") drift=state.av;                 // deriva real de V (F cte)
+    else drift=(state.df - state.dv);                        // proxy simple para el abanico
+    const R0 = state.ratio>0?state.ratio:1;
+
+    // simular
+    const NP=64; let invested=0;
+    ctx.lineWidth=1.4;
+    const paths=[];
+    for(let p=0;p<NP;p++){
+      let r=R0, crossed=false, cx=-1,cy=-1;
+      const pts=[[Xt(0),Yr(r)]];
+      for(let i=1;i<=steps;i++){
+        r=r*Math.exp((drift-0.5*sigma*sigma)*dt + sigma*Math.sqrt(dt)*gauss());
+        r=Math.max(r,0.001);
+        pts.push([Xt(i),Yr(Math.min(r,yMax))]);
+        if(!crossed && r>=cstar){crossed=true;cx=Xt(i);cy=Yr(cstar);}
+      }
+      if(crossed)invested++;
+      paths.push({pts,crossed,cx,cy});
+    }
+    // dibujar: primero los que esperaron (recesivos), luego los que invirtieron
+    for(const P of paths){ if(P.crossed)continue; strokePath(ctx,P.pts,cWait,0.28); }
+    for(const P of paths){ if(!P.crossed)continue; strokePath(ctx,P.pts,cInv,0.5); }
+    // marcadores de cruce
+    ctx.fillStyle=cInv;
+    for(const P of paths){ if(P.crossed){ctx.beginPath();ctx.arc(P.cx,P.cy,2.6,0,7);ctx.fill();} }
+
+    // líneas umbral
+    dashLine(ctx,x0,Yr(1),x1,Yr(1),ink3,"4,4",1.4);
+    solidLine(ctx,x0,Yr(cstar),x1,Yr(cstar),cAcc,2);
+    ctx.font="600 11px -apple-system,Segoe UI,sans-serif";
+    chip(ctx,"C* = "+cstar.toFixed(2)+" · invertir",x1-6,Yr(cstar)-9,cAcc,"right");
+    chip(ctx,"V/F = 1 · VAN=0",x1-6,Yr(1)+9,ink2,"right");
+
+    document.getElementById("cap1").innerHTML =
+      '<b>'+Math.round(invested/NP*100)+'%</b> de las '+NP+' trayectorias cruzan <b>C*</b> y se invierte capturando la subida; el resto sigue esperando (payoff pisado en 0). '+
+      'La inversión es irreversible pero esperar no: por eso se conserva la cola buena y se recorta la mala — la asimetría que hace <b>C*&gt;1</b>.';
+  }
+  function strokePath(ctx,pts,color,alpha){ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.stroke();ctx.globalAlpha=1;}
+  function dashLine(ctx,a,b,c,d,col,dash,w){ctx.save();ctx.setLineDash(dash.split(",").map(Number));ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(c,d);ctx.stroke();ctx.restore();}
+  function solidLine(ctx,a,b,c,d,col,w){ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(c,d);ctx.stroke();}
+  function chip(ctx,text,x,y,col,align){
+    const pad=5, w=ctx.measureText(text).width, bw=w+pad*2, bh=17;
+    const bx = align==="right" ? x-bw : x;
+    ctx.save();
+    ctx.globalAlpha=.9; ctx.fillStyle=css('--surface');
+    if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,y-bh/2,bw,bh,5);ctx.fill();}
+    else ctx.fillRect(bx,y-bh/2,bw,bh);
+    ctx.globalAlpha=1; ctx.fillStyle=col; ctx.textAlign="left"; ctx.textBaseline="middle";
+    ctx.fillText(text,bx+pad,y+.5);
+    ctx.restore();
+  }
+
+  /* ===================== sliders por modo ===================== */
+  const SLIDERS={
+    delta:[
+      {k:"sv2",nm:'σ<sub>v</sub>²',min:0.005,max:0.30,step:0.005,fmt:f3,hint:"varianza de V"},
+      {k:"sf2",nm:'σ<sub>f</sub>²',min:0,max:0.30,step:0.005,fmt:f3,hint:"varianza de F"},
+      {k:"rho",nm:'ρ<sub>vf</sub>',min:-0.9,max:0.9,step:0.05,fmt:f2,hint:"correlación V,F"},
+      {k:"dv",nm:'δ<sub>v</sub>',min:0.01,max:0.30,step:0.005,fmt:f3,hint:"payout de V = costo de esperar"},
+      {k:"df",nm:'δ<sub>f</sub>',min:0.01,max:0.30,step:0.005,fmt:f3,hint:"ahorro por diferir el costo"},
+      {k:"lam",nm:'λ',min:0,max:0.25,step:0.005,fmt:f3,hint:"prob. de salto a cero"},
+      {k:"ratio",nm:'V/F actual',min:0.2,max:3.5,step:0.02,fmt:f2,hint:"dónde estás hoy"}
+    ],
+    alpha:[
+      {k:"mu",nm:'μ',min:0.03,max:0.25,step:0.005,fmt:f3,hint:"descuento de la opción"},
+      {k:"av",nm:'α<sub>v</sub>',min:-0.05,max:0.12,step:0.005,fmt:f3,hint:"drift real de V"},
+      {k:"sv",nm:'σ<sub>v</sub>',min:0.05,max:0.60,step:0.01,fmt:f2,hint:"volatilidad de V"},
+      {k:"lamA",nm:'λ',min:0,max:0.25,step:0.005,fmt:f3,hint:"prob. de salto a cero"},
+      {k:"ratio",nm:'V/F actual',min:0.2,max:3.5,step:0.02,fmt:f2,hint:"dónde estás hoy"}
+    ]
+  };
+  function buildSliders(){
+    const host=document.getElementById("sliders"); host.textContent="";
+    for(const s of SLIDERS[state.mode]){
+      const w=document.createElement("div"); w.className="ctl";
+      w.innerHTML='<div class="lab"><span class="nm"><b class="math">'+s.nm+'</b> <span style="color:var(--ink-3)">— '+s.hint+'</span></span>'+
+                  '<span class="val" id="v-'+s.k+'"></span></div>'+
+                  '<input type="range" id="r-'+s.k+'" min="'+s.min+'" max="'+s.max+'" step="'+s.step+'" value="'+state[s.k]+'">';
+      host.appendChild(w);
+      const inp=w.querySelector("input"), out=w.querySelector(".val");
+      const upd=()=>{ state[s.k]=parseFloat(inp.value); out.textContent=s.fmt(state[s.k]); render(); };
+      inp.addEventListener("input",upd); out.textContent=s.fmt(state[s.k]);
+    }
+  }
+
+  /* ===================== presets ===================== */
+  const PRESETS=[
+    {t:"Caso base",d:"paper · C*=1.86",st:{mode:"delta",sv2:0.04,sf2:0.04,rho:0,dv:0.10,df:0.10,lam:0,ratio:1.00}},
+    {t:"Ejemplo corrido",d:"F=50, V₀=70 · ε=√5",st:{mode:"alpha",mu:0.10,av:0.02,sv:0.20,lamA:0,F0:50,V0:70,ratio:1.40}},
+    {t:"Alta volatilidad",d:"σ=40% · C*≈2.80",st:{mode:"alpha",mu:0.10,av:0.02,sv:0.40,lamA:0,F0:50,V0:70,ratio:1.40}},
+    {t:"Con salto Poisson",d:"λ=5% · C*≈1.57",st:{mode:"alpha",mu:0.10,av:0.02,sv:0.20,lamA:0.05,F0:50,V0:70,ratio:1.40}}
+  ];
+  function buildPresets(){
+    const host=document.getElementById("presets"); host.textContent="";
+    for(const p of PRESETS){
+      const b=document.createElement("button"); b.className="preset"; b.type="button";
+      b.innerHTML=p.t+"<small>"+p.d+"</small>";
+      b.addEventListener("click",()=>{ Object.assign(state,p.st); setMode(state.mode,true); });
+      host.appendChild(b);
+    }
+  }
+
+  /* ===================== modo ===================== */
+  function setMode(mode,keep){
+    state.mode=mode;
+    document.getElementById("modeD").setAttribute("aria-pressed",String(mode==="delta"));
+    document.getElementById("modeA").setAttribute("aria-pressed",String(mode==="alpha"));
+    document.getElementById("modeNote").innerHTML = mode==="delta"
+      ? 'Parámetros de las <b>Tablas I–II</b>: σ², ρ, δ. Regenera las celdas del paper. (Ec. 12, forma-δ.)'
+      : 'El <b>ejemplo del guion</b>: F constante, drift y descuento explícitos. (Ec. 5, forma-α.)';
+    buildSliders(); render();
+  }
+
+  /* ===================== render maestro ===================== */
+  function render(){
+    const md=model();
+    renderStats(md); renderSVG(md); renderCanvas(md); renderText(md);
+  }
+
+  /* ===================== tabs ===================== */
+  function selectTab(which){
+    const t2=which===2;
+    document.getElementById("tab2").setAttribute("aria-selected",String(t2));
+    document.getElementById("tab1").setAttribute("aria-selected",String(!t2));
+    document.getElementById("view2").dataset.active=String(t2);
+    document.getElementById("view1").dataset.active=String(!t2);
+    render();
+  }
+  document.getElementById("tab2").addEventListener("click",()=>selectTab(2));
+  document.getElementById("tab1").addEventListener("click",()=>selectTab(1));
+  document.getElementById("modeD").addEventListener("click",()=>setMode("delta"));
+  document.getElementById("modeA").addEventListener("click",()=>setMode("alpha"));
+  document.getElementById("regen").addEventListener("click",()=>{seed=(seed*7+101)&0x7fffffff;render();});
+
+  /* ===================== tema ===================== */
+  document.getElementById("themeBtn").addEventListener("click",()=>{
+    const root=document.documentElement;
+    const cur=root.getAttribute("data-theme")
+      || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+    root.setAttribute("data-theme", cur==="dark"?"light":"dark");
+    render();
+  });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",render);
+  window.addEventListener("resize",()=>renderCanvas(model()));
+
+  /* ===================== init ===================== */
+  buildPresets(); setMode("delta");
+})();
+</script>
+</body>
+</html>
