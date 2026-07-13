@@ -4,7 +4,7 @@
 *Nota puente entre lo que estudiamos y la pieza interactiva de cierre: `visualizacion/cierre-mcdonald-siegel.html`.*
 *Relacionadas: [[Nota - Ideas del paper (McDonald-Siegel 1986)]] (la nota madre), [[Nota - Estáticas comparativas (varianza, correlación y drifts)]], [[Nota - Tasa de descuento correcta (diversificación, Itô y CAPM)]], [[Nota - Tablas de la Sección IV (cómo leerlas)]], [[Nota - Jumps in Vt (vencimiento aleatorio)]], [[Nota - Apéndice del paper (qué hace y por qué)]].*
 
-La visualización tiene **dos vistas** (el resultado y la intuición), un **toggle** entre la parametrización de las tablas del paper y la del ejemplo corrido, **sliders** para cada parámetro, **presets** y **readouts** en vivo. Esta nota tiene dos partes: primero la teoría condensada tal como la venimos estudiando (Parte A), después la guía de qué mira cada perilla y cada elemento del gráfico (Parte B). Todo lo que se ve en la pieza sale de las tres fórmulas de A.3.
+La visualización tiene **dos vistas** (el resultado y la intuición), **sliders** para cada parámetro, **presets** y **readouts** en vivo. Usa una sola parametrización: **la del paper** (forma-δ, la de las Tablas I-II) — así no hay que explicar nada extra, se dice "visualizamos el caso del paper" y listo. Esta nota tiene dos partes: primero la teoría condensada tal como la venimos estudiando (Parte A), después la guía de qué mira cada perilla y cada elemento del gráfico (Parte B). Todo lo que se ve en la pieza sale de las tres fórmulas de A.3.
 
 ---
 
@@ -35,7 +35,7 @@ $$\boxed{\;C^* = \frac{\varepsilon}{\varepsilon-1}\;}\qquad
 
 ## A.4 Quién es $\varepsilon$ — dos formas de la misma raíz
 
-$\varepsilon$ es la raíz $>1$ de la cuadrática característica del Apéndice. Se escribe de dos maneras equivalentes (las dos están en el deck y las dos las usa la visualización según el modo):
+$\varepsilon$ es la raíz $>1$ de la cuadrática característica del Apéndice. Se escribe de dos maneras equivalentes (las dos están en el deck). La **visualización usa la forma-δ**, que es con la que el paper corre las Tablas I-II; la forma-α queda como background del ejemplo corrido (A.5):
 
 **Forma-α** (drifts y descuento explícitos — ec. 5, la del ejemplo corrido):
 $$\varepsilon = \sqrt{\left(\frac{\alpha_v-\alpha_f}{\sigma^2}-\tfrac12\right)^{\!2} + \frac{2(\mu-\alpha_f)}{\sigma^2}} \;+\; \left(\tfrac12 - \frac{\alpha_v-\alpha_f}{\sigma^2}\right)$$
@@ -54,7 +54,7 @@ $\varepsilon$ es la **elasticidad del factor de descuento respecto del umbral**,
 
 ## A.5 El ejemplo corrido (para que los números tengan cara)
 
-$F = 50$M constante, $V_0 = 70$M (ratio $1.4$), $\mu = 10\%$, $\alpha_v = 2\%$, $\sigma_v = 20\%$. Como $F$ es fijo, $\sigma_f=\alpha_f=\rho=0$ y $\sigma^2 = 0.04$. La cuadrática se reduce a $\tfrac{\sigma^2}{2}\varepsilon(\varepsilon-1)+\alpha_v\varepsilon-\mu=0$; los términos $\pm 0.02\varepsilon$ se cancelan (porque $\alpha_v=\sigma^2/2$) y queda $0.02\,\varepsilon^2 = 0.10 \Rightarrow \varepsilon = \sqrt5 \approx 2.24 \Rightarrow C^* \approx 1.81$.
+*Background, no está en la visualización ni en el paper: es el ejemplo que armamos para el guion oral.* $F = 50$M constante, $V_0 = 70$M (ratio $1.4$), $\mu = 10\%$, $\alpha_v = 2\%$, $\sigma_v = 20\%$. Como $F$ es fijo, $\sigma_f=\alpha_f=\rho=0$ y $\sigma^2 = 0.04$. La cuadrática se reduce a $\tfrac{\sigma^2}{2}\varepsilon(\varepsilon-1)+\alpha_v\varepsilon-\mu=0$; los términos $\pm 0.02\varepsilon$ se cancelan (porque $\alpha_v=\sigma^2/2$) y queda $0.02\,\varepsilon^2 = 0.10 \Rightarrow \varepsilon = \sqrt5 \approx 2.24 \Rightarrow C^* \approx 1.81$.
 
 Valor de la opción en $V_0=70$: $X = 22.8$M, contra un VPN inmediato de $70-50 = 20$M. **Esperar agrega $\approx 2.8$M ($14\%$)**. El disparador dice: no inviertas a los 70; esperá hasta que $V$ llegue a $C^*\!\cdot\!F = 90$M.
 
@@ -117,48 +117,33 @@ Un abanico de ~60 trayectorias simuladas del ratio $V/F$ en el tiempo, más las 
 | **$X$** | valor de la opción en $V=F$ | por dólar de proyecto; = la celda de la Tabla I |
 | **% destruido si VAN=0** | $X$ en $V=F$, en % | cuánto valor tirás por invertir al cruzar; la conclusión del 10-20% |
 
-## B.3 El toggle δ / α
+## B.3 Una sola parametrización: el caso del paper
 
-- **"Caso base del paper (δ · tablas)"** — parametrización en costos de oportunidad. Sliders $\sigma_v^2, \sigma_f^2, \rho_{vf}, \delta_v, \delta_f$. Regenera las **celdas de las Tablas I-II** (probalo: el preset da $C^*=1.86$, $X=0.23$). Usá este modo si querés conectar con las tablas que mostramos.
-- **"Ejemplo corrido (α · ε=√5)"** — parametrización con drift y descuento, $F$ constante. Sliders $\mu, \alpha_v, \sigma_v$. Reproduce el ejemplo del guion oral. Usá este modo si querés contar la historia de los 50/70 millones.
-
-Las dos dan el mismo $\varepsilon$; son dos formas de la misma cuadrática (A.4).
+La pieza usa directamente los parámetros de las **Tablas I-II** (forma-δ): $\sigma_v^2, \sigma_f^2, \rho_{vf}, \delta_v, \delta_f$, más $\lambda$. No hay que elegir nada ni explicar dos modos: cada combinación de sliders **regenera una celda del paper**. El caso base da $C^*=1.86$ y opción $0.23$ — la celda resaltada. (La forma equivalente con drift y descuento es la del ejemplo corrido de A.5; la dejamos afuera de la pieza a propósito, para no complicar.)
 
 ## B.4 Guía parámetro por parámetro
-
-### Modo δ (parámetros de las tablas)
 
 - **$\sigma_v^2$ — varianza de $V$.** Entra en $\sigma^2$. Subirla ⇒ $C^*\!\uparrow$, $X\!\uparrow$. *Qué mirás:* en Vista 2 la curva azul se despega más del payoff y $C^*$ se corre a la derecha; en Vista 1 el abanico se abre.
 - **$\sigma_f^2$ — varianza de $F$.** Idem: también sube $\sigma^2$ y hace esperar más. *El punto no obvio:* más incertidumbre en el **costo** también aumenta el valor de esperar — lo que importa es la varianza del *ratio*, no de dónde viene.
 - **$\rho_{vf}$ — correlación entre $V$ y $F$.** Entra **restando** en $\sigma^2$. Subirla ⇒ $C^*\!\downarrow$, $X\!\downarrow$ (cobertura natural: si $V$ y $F$ se mueven juntos, el ratio es estable). Ponerla negativa dispara el valor.
 - **$\delta_v$ — payout de $V$ = costo de esperar.** El dividendo que el proyecto instalado pagaría y que *no cobrás* mientras esperás. **La perilla más potente.** Subirla ⇒ $C^*\!\downarrow$, $X\!\downarrow\downarrow$ (esperar cuesta caro ⇒ ejercés antes). Bajarla hacia 0 ⇒ $C^*\to\infty$: la pieza muestra "δv ≤ 0 ⇒ C* → ∞ (nunca invertir)".
 - **$\delta_f$ — ahorro por diferir el costo.** Lo que rinde $F$ mientras no lo gastás (si $F$ es caja, $\delta_f=$ tasa libre de riesgo). Subirla ⇒ $C^*\!\uparrow$, $X\!\uparrow$: te pagan por postergar el desembolso.
-- **$\lambda$ — probabilidad anual de salto a cero.** Vencimiento aleatorio. Entra como $\mu\to\mu+\lambda$. Subirla ⇒ $C^*\!\downarrow$, $X\!\downarrow$: "la muerte apura", ya no conviene esperar tanto.
+- **$\lambda$ — probabilidad anual de salto a cero.** Vencimiento aleatorio. Entra como $\mu\to\mu+\lambda$ (en la fórmula, suma a $\delta_f$ en el término constante). Subirla ⇒ $C^*\!\downarrow$, $X\!\downarrow$: "la muerte apura", ya no conviene esperar tanto.
+- **$V/F$ actual — dónde estás hoy.** Es el único slider que **no cambia** $\varepsilon$, $C^*$ ni $X$ (esos son propiedades de los parámetros, no de tu posición). Lo que mueve es el **marcador** de Vista 2: el VAN inmediato $\max(V/F-1,0)$ y la brecha "valor de esperar" en ese punto. En $V/F=1$ el VAN es 0 y la brecha es toda la opción (la conclusión del 10-20%); más a la derecha, la brecha mide cuánto agrega esperar sobre invertir ya. Si lo llevás hasta $V/F\geq C^*$, entrás en zona de inversión y la brecha se cierra (ejercés).
 
-### Modo α (ejemplo corrido, $F$ constante)
+## B.5 Los presets (todos son celdas de las Tablas I-II)
 
-- **$\mu$ — descuento de la opción.** El retorno requerido de la oportunidad (apalancada). Subirlo ⇒ $C^*\!\downarrow$, $X\!\downarrow$. Es la static "mecánica" que el propio paper pide no tomar demasiado en serio aislada.
-- **$\alpha_v$ — drift real de $V$.** La apreciación esperada del proyecto. Subirlo ⇒ $C^*\!\uparrow$, $X\!\uparrow$ (cuanto más rápido crece $V$, más rinde esperar). Cuando $\alpha_v\to\mu$ el payout implícito $\delta_v=\mu-\alpha_v\to0$ y $C^*\to\infty$.
-- **$\sigma_v$ — volatilidad de $V$.** Con $F$ fijo, $\sigma=\sigma_v$. Es la perilla de incertidumbre pura del ejemplo: $20\%\to40\%$ lleva $C^*$ de $1.81$ a $2.80$.
-- **$\lambda$** — igual que en modo δ.
-
-### Común a los dos modos
-
-- **$V/F$ actual — dónde estás hoy.** Es el único slider que **no cambia** $\varepsilon$, $C^*$ ni $X$ (esos son propiedades de los parámetros, no de tu posición). Lo que mueve es el **marcador** de Vista 2: el VAN inmediato $\max(V/F-1,0)$ y la brecha "valor de esperar" en ese punto. En $V/F=1$ el VAN es 0 y la brecha es toda la opción (la conclusión del 10-20%). En $V/F=1.4$ (ejemplo) el VAN es 0.4 y esperar suma 14%. Si lo llevás hasta $V/F\geq C^*$, entrás en zona de inversión y la brecha se cierra (ejercés).
-
-## B.5 Los presets
-
-| Preset | Modo | Deja | Historia |
-|---|---|---|---|
-| **Caso base** | δ | $C^*=1.86$, $X=0.23$ | la celda resaltada de las Tablas I-II |
-| **Ejemplo corrido** | α | $\varepsilon=\sqrt5$, $C^*=1.81$ | los 50/70M: opción 22.8M vs. VAN 20M (+14%) |
-| **Alta volatilidad** | α | $C^*\approx2.80$ | $\sigma=40\%$: más incertidumbre ⇒ esperás mucho más |
-| **Con salto Poisson** | α | $C^*\approx1.57$ | $\lambda=5\%$: la muerte apura, esperás menos |
+| Preset | Deja | Historia |
+|---|---|---|
+| **Caso base** | $\sigma^2=0.08$ → $C^*=1.86$, $X=0.23$ | la celda resaltada del paper |
+| **Más incertidumbre** | $\sigma^2=0.20$ → $C^*\approx2.62$ | más varianza ⇒ umbral más alto, opción más valiosa |
+| **Costo de esperar alto** | $\delta_v=0.25$ → $C^*\approx1.24$ | el efecto más fuerte: esperar cuesta ⇒ invertís casi en el VAN |
+| **Con salto Poisson** | $\lambda=0.05$ → $C^*\approx1.67$ | la muerte apura, esperás menos |
 
 ## B.6 Guion de 60 segundos para cerrar
 
 1. *Preset "Caso base".* "Con parámetros razonables de EE.UU., el umbral no es 1: es **1.86**. Conviene esperar hasta que el proyecto valga casi el doble del costo."
 2. *Señalar el área celeste.* "Esta brecha es el valor de esperar. Invertir apenas el VAN cruza cero tira el **23%** del valor: la opción que teníamos gratis."
-3. *Subir el slider de varianza (o preset "Alta volatilidad").* "Y cuanta más incertidumbre, más alto el umbral y más vale esperar — miren cómo $C^*$ se corre a la derecha."
+3. *Subir el slider de varianza (o preset "Más incertidumbre").* "Y cuanta más incertidumbre, más alto el umbral y más vale esperar — miren cómo $C^*$ se corre a la derecha."
 4. *Bajar $\delta_v$ hacia cero.* "Y si el proyecto no paga nada por esperar, el umbral se va a infinito: nunca conviene invertir. Ese es el otro extremo."
 5. *Cambiar a Vista 1.* "El porqué es esta asimetría: capturamos la cola buena y recortamos la mala. Por eso, siempre, $C^*>1$."

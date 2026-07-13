@@ -1,8 +1,8 @@
 % ============================================================
-% PARTE MARIANO — tasa de descuento y saltos en Vt;
-% más adelante, papers posteriores
-% (implementadas las 4 primeras slides finales del borrador de Mariano)
-% Fórmulas cotejadas con McDonald-Siegel (1986), ecs. (8),(10),(12),(13),(14).
+% PARTE MARIANO — tasa de descuento, desguace y saltos de Poisson en Vt
+% (las 7 slides del borrador de Mariano; M1-M5 = slides 1-4, M6-M8 = slides 5-7)
+% Fórmulas cotejadas con McDonald-Siegel (1986): ecs. (8),(10),(12),(13),(14)
+% y la sección de desguace/obsolescencia (proceso Poisson-Wiener, μ→μ+λ).
 % ============================================================
 \divisoria{Mariano Sanchez}% TEMPORAL: borrar en la versión final
 
@@ -101,4 +101,60 @@
   \end{ecmed}
   Ese término \az{$h$} permite \resultado{captar ganancias y evitar pérdidas}
   --- es lo que agrega la opción de esperar.
+\end{frame}
+
+% M6 — desguace óptimo: reinterpretación de V y F [NUEVA]
+\begin{frame}{Desguace óptimo del proyecto}
+  El modelo es \concepto{versátil}: la misma lógica que decide cuándo adquirir
+  un proyecto decide cuándo abandonarlo. Basta reinterpretar las variables:
+  \begin{itemize}
+    \item \rj{$V$}: valor de desguace aleatorio (precio de venta).
+    \item \az{$F$}: valor del proyecto en funcionamiento (valor en uso).
+    \item \rj{$V$}$-$\az{$F$}: beneficio del desguace.
+  \end{itemize}
+  El valor de la opción de desmantelar es
+  \begin{ec}
+    \rj{X} = \az{(C^*-1)\,F_0\!\left(\frac{V_0/F_0}{C^*}\right)^{\!\varepsilon}
+      = (1-c^*)\,V_0\!\left(\frac{F_0/V_0}{c^*}\right)^{\!1-\varepsilon}}
+  \end{ec}
+  Regla óptima: desmantelar cuando \az{$F$}$/$\rj{$V$} desciende al umbral
+  \rj{$c^*$}. Con vida finita harían falta \resultado{métodos numéricos}.
+\end{frame}
+
+% M7 — saltos de Poisson en Vt (riesgo de ruina) [NUEVA]
+% OJO: se solapa con la slide de Felipe "¿Y si la oportunidad puede vencer?"
+\begin{frame}{Saltos en $V_t$: el riesgo de ruina}
+  \concepto{Obsolescencia repentina}: \rj{$V_t$} puede caer a cero de golpe
+  (un rival, un salto tecnológico) y dejar inútil al proyecto. Se modela con un
+  proceso mixto \concepto{Poisson--Wiener}:
+  \begin{ecmed}
+    \rj{\frac{dV}{V}} = \az{\alpha_v\,dt + \sigma_v\,dz_v} + \rj{dq}
+  \end{ecmed}
+  con \rj{$dq$} el salto de Poisson (muerte súbita) de intensidad
+  \az{$\lambda$}. Si el salto ocurre, el proceso se detiene: es una opción de
+  \concepto{vencimiento incierto}. El riesgo se absorbe sumando \az{$\lambda$}
+  a la tasa de descuento (\az{$\mu \to \mu+\lambda$}):
+  \begin{ecmed}
+    \rj{X^*} = \az{\max_{\{C_t'\}} E_0\!\left(e^{-(\mu+\lambda)t'}\,
+      F\,[C_t'-1]\right)}
+  \end{ecmed}
+\end{frame}
+
+% M8 — impacto de la obsolescencia en la regla (efecto de lambda) [NUEVA]
+\begin{frame}{Impacto de la obsolescencia en la regla}
+  Ajustando la tasa con el lema de Itô, el rendimiento requerido es
+  \az{$r + \varepsilon(\hat{\alpha}_v - r)$}, y \rj{$\varepsilon$} resuelve
+  \begin{ecmed}
+    \rj{\varepsilon} = \az{\sqrt{\left(\frac{r-\delta_v}{\sigma_v^2}
+      - \frac12\right)^{\!2} + \frac{2(r+\lambda)}{\sigma_v^2}}
+      + \left(\frac12 - \frac{r-\delta_v}{\sigma_v^2}\right)}
+  \end{ecmed}
+  (si \az{$F$} es estocástico, \az{$r$} se reemplaza por \az{$\delta_f$}).
+  \begin{itemize}
+    \item Más \az{$\lambda$} \resultado{reduce el valor de la opción} y baja el
+          umbral \rj{$C^*$}.
+    \item En opciones financieras puras (Merton, 1976) el riesgo de ruina
+          \emph{aumenta} el valor; en opciones de inversión real lo
+          \resultado{destruye}.
+  \end{itemize}
 \end{frame}

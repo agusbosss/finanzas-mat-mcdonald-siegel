@@ -227,12 +227,8 @@
 
     <!-- ===== controls ===== -->
     <aside class="card controls">
-      <h2>Parametrización</h2>
-      <div class="seg" role="group" aria-label="Modo de parametrización">
-        <button id="modeD" type="button" aria-pressed="true">Caso base del paper<br>(δ · tablas)</button>
-        <button id="modeA" type="button" aria-pressed="false">Ejemplo corrido<br>(α · ε=√5)</button>
-      </div>
-      <div class="mode-note" id="modeNote"></div>
+      <h2>Parámetros — caso del paper</h2>
+      <div class="mode-note">Los mismos parámetros de las <b>Tablas I–II</b> (σ², ρ, δ). Cada combinación regenera una celda del paper.</div>
 
       <div id="sliders"></div>
 
@@ -244,50 +240,36 @@
     </aside>
   </div>
 
-  <p class="foot">Fórmulas: ε de la cuadrática característica (ec. 5 / ec. 12), <b>C* = ε/(ε−1)</b>, <b>X = (C*−1)·F₀·((V₀/F₀)/C*)^ε</b>. Reproduce las Tablas I–II del paper. · Trabajo final — Finanzas Matemáticas, UCEMA.</p>
+  <p class="foot">Fórmulas: ε de la cuadrática característica (ec. 12, forma-δ), <b>C* = ε/(ε−1)</b>, <b>X = (C*−1)·F₀·((V₀/F₀)/C*)^ε</b>. Reproduce las Tablas I–II del paper. · Trabajo final — Finanzas Matemáticas, UCEMA.</p>
 </div>
 
 <script>
 "use strict";
 (function(){
   /* ============================ estado ============================ */
+  // Parametrización del paper (forma-δ, Tablas I-II). Evaluado por dólar de F.
   const state = {
-    mode: "delta",
-    // delta-form (tablas)
     sv2:0.04, sf2:0.04, rho:0, dv:0.10, df:0.10, lam:0,
-    // alpha-form (F constante, ejemplo)
-    mu:0.10, av:0.02, sv:0.20, lamA:0,
-    F0:50, V0:70,           // millones (solo modo alpha, para los montos)
     ratio:1.00              // V/F "actual" (marcador)
   };
 
   /* ===================== motor de cálculo ===================== */
-  // devuelve {eps, cstar, sigma2, valid, optAt(r)->valor opción, payAt(r), Xatratio}
+  // ε = raíz >1 de la cuadrática característica (ec. 12); C*=ε/(ε−1); X=(C*−1)(V/F/C*)^ε
   function model(){
-    let sigma2, eps, m;
-    if(state.mode==="delta"){
-      sigma2 = state.sv2 + state.sf2 - 2*state.rho*Math.sqrt(state.sv2*state.sf2);
-      m = (state.df - state.dv)/sigma2;                 // parte lineal usa df pelado
-      const under = (m-0.5)*(m-0.5) + 2*(state.df + state.lam)/sigma2;  // λ suma a df en el término constante
-      eps = Math.sqrt(under) + (0.5 - m);
-    } else {
-      sigma2 = state.sv*state.sv;                        // F constante: σ² = σ_v²
-      const k = state.av/sigma2;                         // (α_v−α_f)/σ² con α_f=0
-      const under = (k-0.5)*(k-0.5) + 2*(state.mu + state.lamA)/sigma2;
-      eps = Math.sqrt(under) + (0.5 - k);
-    }
+    const sigma2 = state.sv2 + state.sf2 - 2*state.rho*Math.sqrt(state.sv2*state.sf2);
+    const m = (state.df - state.dv)/sigma2;              // parte lineal usa δf pelado
+    const under = (m-0.5)*(m-0.5) + 2*(state.df + state.lam)/sigma2;  // λ suma a δf en el término constante
+    const eps = Math.sqrt(under) + (0.5 - m);
     const valid = eps>1.0000001 && isFinite(eps);
     const cstar = valid ? eps/(eps-1) : Infinity;
-    const F0 = state.mode==="alpha" ? state.F0 : 1;
-    // valor de la opción por dólar de F (o en millones si modo alpha usa F0)
-    function optAt(r){                                   // r = V/F
+    function optAt(r){                                   // r = V/F, valor por dólar de F
       if(!valid) return NaN;
       if(r>=cstar) return (r-1);                         // ya invertiste: intrínseco
       return (cstar-1)*Math.pow(r/cstar, eps);
     }
     function payAt(r){ return Math.max(r-1,0); }
     const Xunit = valid ? optAt(1) : NaN;                // opción en V=F (=celda Tabla I)
-    return {sigma2,eps,cstar,valid,optAt,payAt,Xunit,F0};
+    return {sigma2,eps,cstar,valid,optAt,payAt,Xunit};
   }
 
   /* ============================ formato ============================ */
@@ -302,8 +284,7 @@
       ? 'invertir recién en <span class="tnum">V = '+f2(md.cstar)+'·F</span>'
       : 'δ_v→0: nunca conviene invertir';
     document.getElementById("s-x").textContent     = md.valid? f2(md.Xunit) : "—";
-    document.getElementById("s-x-u").textContent   = state.mode==="alpha"
-      ? "≈ "+f2(md.Xunit*state.F0)+"M de opción en V=F" : "por dólar de proyecto, en V=F";
+    document.getElementById("s-x-u").textContent   = "por dólar de proyecto, en V=F";
     document.getElementById("s-loss").textContent  = md.valid? Math.round(md.Xunit*100) : "—";
   }
 
@@ -323,9 +304,8 @@
       const oi=md.optAt(state.ratio), pi=md.payAt(state.ratio);
       const gap=oi-pi;
       const pct = pi>1e-6 ? " (+"+Math.round(gap/pi*100)+"% sobre el VAN inmediato)" : "";
-      const money = state.mode==="alpha" ? " · en montos: opción ≈ "+f2(oi*state.F0)+"M vs. VAN "+f2(Math.max(pi,0)*state.F0)+"M" : "";
       c2.innerHTML='La curva azul (opción viva) va siempre por encima del palo de hockey (VAN) y lo toca con tangencia en <b>C*='+f2(md.cstar)+'</b> (smooth-pasting). '+
-        'En <span class="math">V/F</span>='+f2(state.ratio)+', esperar vale <b>'+f3(gap)+'</b>'+pct+'.'+money;
+        'En <span class="math">V/F</span>='+f2(state.ratio)+', esperar vale <b>'+f3(gap)+'</b>'+pct+'.';
     } else { c2.textContent="Sin umbral finito con estos parámetros."; }
   }
 
@@ -433,11 +413,9 @@
     }
     ctx.textAlign="center";ctx.fillStyle=ink2;ctx.fillText("tiempo →",(x0+x1)/2,H-9);
 
-    // volatilidad y drift del ratio
+    // volatilidad y drift del ratio (proxy simple para el abanico)
     const sigma=Math.sqrt(Math.max(md.sigma2,1e-6));
-    let drift;
-    if(state.mode==="alpha") drift=state.av;                 // deriva real de V (F cte)
-    else drift=(state.df - state.dv);                        // proxy simple para el abanico
+    const drift=(state.df - state.dv);
     const R0 = state.ratio>0?state.ratio:1;
 
     // simular
@@ -489,28 +467,19 @@
     ctx.restore();
   }
 
-  /* ===================== sliders por modo ===================== */
-  const SLIDERS={
-    delta:[
-      {k:"sv2",nm:'σ<sub>v</sub>²',min:0.005,max:0.30,step:0.005,fmt:f3,hint:"varianza de V"},
-      {k:"sf2",nm:'σ<sub>f</sub>²',min:0,max:0.30,step:0.005,fmt:f3,hint:"varianza de F"},
-      {k:"rho",nm:'ρ<sub>vf</sub>',min:-0.9,max:0.9,step:0.05,fmt:f2,hint:"correlación V,F"},
-      {k:"dv",nm:'δ<sub>v</sub>',min:0.01,max:0.30,step:0.005,fmt:f3,hint:"payout de V = costo de esperar"},
-      {k:"df",nm:'δ<sub>f</sub>',min:0.01,max:0.30,step:0.005,fmt:f3,hint:"ahorro por diferir el costo"},
-      {k:"lam",nm:'λ',min:0,max:0.25,step:0.005,fmt:f3,hint:"prob. de salto a cero"},
-      {k:"ratio",nm:'V/F actual',min:0.2,max:3.5,step:0.02,fmt:f2,hint:"dónde estás hoy"}
-    ],
-    alpha:[
-      {k:"mu",nm:'μ',min:0.03,max:0.25,step:0.005,fmt:f3,hint:"descuento de la opción"},
-      {k:"av",nm:'α<sub>v</sub>',min:-0.05,max:0.12,step:0.005,fmt:f3,hint:"drift real de V"},
-      {k:"sv",nm:'σ<sub>v</sub>',min:0.05,max:0.60,step:0.01,fmt:f2,hint:"volatilidad de V"},
-      {k:"lamA",nm:'λ',min:0,max:0.25,step:0.005,fmt:f3,hint:"prob. de salto a cero"},
-      {k:"ratio",nm:'V/F actual',min:0.2,max:3.5,step:0.02,fmt:f2,hint:"dónde estás hoy"}
-    ]
-  };
+  /* ===================== sliders ===================== */
+  const SLIDERS=[
+    {k:"sv2",nm:'σ<sub>v</sub>²',min:0.005,max:0.30,step:0.005,fmt:f3,hint:"varianza de V"},
+    {k:"sf2",nm:'σ<sub>f</sub>²',min:0,max:0.30,step:0.005,fmt:f3,hint:"varianza de F"},
+    {k:"rho",nm:'ρ<sub>vf</sub>',min:-0.9,max:0.9,step:0.05,fmt:f2,hint:"correlación V,F"},
+    {k:"dv",nm:'δ<sub>v</sub>',min:0.01,max:0.30,step:0.005,fmt:f3,hint:"payout de V = costo de esperar"},
+    {k:"df",nm:'δ<sub>f</sub>',min:0.01,max:0.30,step:0.005,fmt:f3,hint:"ahorro por diferir el costo"},
+    {k:"lam",nm:'λ',min:0,max:0.25,step:0.005,fmt:f3,hint:"prob. de salto a cero"},
+    {k:"ratio",nm:'V/F actual',min:0.2,max:3.5,step:0.02,fmt:f2,hint:"dónde estás hoy"}
+  ];
   function buildSliders(){
     const host=document.getElementById("sliders"); host.textContent="";
-    for(const s of SLIDERS[state.mode]){
+    for(const s of SLIDERS){
       const w=document.createElement("div"); w.className="ctl";
       w.innerHTML='<div class="lab"><span class="nm"><b class="math">'+s.nm+'</b> <span style="color:var(--ink-3)">— '+s.hint+'</span></span>'+
                   '<span class="val" id="v-'+s.k+'"></span></div>'+
@@ -522,32 +491,21 @@
     }
   }
 
-  /* ===================== presets ===================== */
+  /* ===================== presets (todos = celdas del paper) ===================== */
   const PRESETS=[
-    {t:"Caso base",d:"paper · C*=1.86",st:{mode:"delta",sv2:0.04,sf2:0.04,rho:0,dv:0.10,df:0.10,lam:0,ratio:1.00}},
-    {t:"Ejemplo corrido",d:"F=50, V₀=70 · ε=√5",st:{mode:"alpha",mu:0.10,av:0.02,sv:0.20,lamA:0,F0:50,V0:70,ratio:1.40}},
-    {t:"Alta volatilidad",d:"σ=40% · C*≈2.80",st:{mode:"alpha",mu:0.10,av:0.02,sv:0.40,lamA:0,F0:50,V0:70,ratio:1.40}},
-    {t:"Con salto Poisson",d:"λ=5% · C*≈1.57",st:{mode:"alpha",mu:0.10,av:0.02,sv:0.20,lamA:0.05,F0:50,V0:70,ratio:1.40}}
+    {t:"Caso base",d:"σ²=0.08 · C*=1.86",st:{sv2:0.04,sf2:0.04,rho:0,dv:0.10,df:0.10,lam:0,ratio:1.00}},
+    {t:"Más incertidumbre",d:"σ²=0.20 · C*≈2.62",st:{sv2:0.10,sf2:0.10,rho:0,dv:0.10,df:0.10,lam:0,ratio:1.00}},
+    {t:"Costo de esperar alto",d:"δv=0.25 · C*≈1.24",st:{sv2:0.04,sf2:0.04,rho:0,dv:0.25,df:0.10,lam:0,ratio:1.00}},
+    {t:"Con salto Poisson",d:"λ=0.05 · C*≈1.67",st:{sv2:0.04,sf2:0.04,rho:0,dv:0.10,df:0.10,lam:0.05,ratio:1.00}}
   ];
   function buildPresets(){
     const host=document.getElementById("presets"); host.textContent="";
     for(const p of PRESETS){
       const b=document.createElement("button"); b.className="preset"; b.type="button";
       b.innerHTML=p.t+"<small>"+p.d+"</small>";
-      b.addEventListener("click",()=>{ Object.assign(state,p.st); setMode(state.mode,true); });
+      b.addEventListener("click",()=>{ Object.assign(state,p.st); buildSliders(); render(); });
       host.appendChild(b);
     }
-  }
-
-  /* ===================== modo ===================== */
-  function setMode(mode,keep){
-    state.mode=mode;
-    document.getElementById("modeD").setAttribute("aria-pressed",String(mode==="delta"));
-    document.getElementById("modeA").setAttribute("aria-pressed",String(mode==="alpha"));
-    document.getElementById("modeNote").innerHTML = mode==="delta"
-      ? 'Parámetros de las <b>Tablas I–II</b>: σ², ρ, δ. Regenera las celdas del paper. (Ec. 12, forma-δ.)'
-      : 'El <b>ejemplo del guion</b>: F constante, drift y descuento explícitos. (Ec. 5, forma-α.)';
-    buildSliders(); render();
   }
 
   /* ===================== render maestro ===================== */
@@ -567,8 +525,6 @@
   }
   document.getElementById("tab2").addEventListener("click",()=>selectTab(2));
   document.getElementById("tab1").addEventListener("click",()=>selectTab(1));
-  document.getElementById("modeD").addEventListener("click",()=>setMode("delta"));
-  document.getElementById("modeA").addEventListener("click",()=>setMode("alpha"));
   document.getElementById("regen").addEventListener("click",()=>{seed=(seed*7+101)&0x7fffffff;render();});
 
   /* ===================== tema ===================== */
@@ -583,7 +539,7 @@
   window.addEventListener("resize",()=>renderCanvas(model()));
 
   /* ===================== init ===================== */
-  buildPresets(); setMode("delta");
+  buildPresets(); buildSliders(); render();
 })();
 </script>
 </body>
