@@ -63,47 +63,7 @@ del calendario y no hay fórmula cerrada: se necesitan métodos numéricos.
 
 ---
 
-## 2. Notación (símbolos y términos que no coinciden entre partes)
-
-**2.1 Qué es μ, y la equivalencia entre "αv < μ" y "δv > 0" (el más delicado)**
-δ es la diferencia entre el retorno requerido y la deriva (en el paper, la
-"payout rate").
-- Felipe escribe δ = μ − αv y usa la condición αv < μ.
-- Mariano define δv = α̂v − αv, y a μ la define como la tasa de descuento de la
-  *opción*: μ = εα̂v + (1−ε)α̂f (un promedio ponderado de los retornos de V y F).
-- Con el mismo símbolo μ para dos cosas distintas (el retorno exigido a V y el
-  de la opción), "αv < μ" (Felipe/Elias) y "δv > 0" (Mariano) parecen
-  condiciones distintas, cuando en el paper son la misma (δv = α̂v − αv > 0 ⟺
-  αv < α̂v, y eso garantiza ε > 1). Hay que definir qué es μ en cada lugar y
-  dejar clara la equivalencia.
-
-**2.2 Cómo llamamos a δ**
-- Felipe lo llama "rendimiento por dividendos"; Mariano, "costo de oportunidad".
-- En el paper δ es la "payout rate", y a δv·V y δf·F los llama explícitamente
-  "opportunity cost" (de no instalar, y de diferir). El dividendo es una
-  analogía (la opción sobre una acción que paga dividendos, à la Samuelson), no
-  el nombre técnico.
-- Hay que usar un solo término en toda la presentación.
-
-**2.3 Los distintos umbrales: C*, c*, Ĉ, Cₜ***
-- C*: umbral sobre el ratio V/F (el principal).
-- c*: umbral sobre F/V, en el desguace (Mariano M6).
-- Ĉ: umbral del caso determinístico, Ĉ = δf/δv (Mariano M5).
-- Cₜ*: umbral que depende del calendario, en el caso con vencimiento (Elias E2).
-- Son cuatro variantes con nombres muy parecidos; hay que revisar que el
-  público las distinga.
-
-**2.4 La ε aparece dos veces en forma cerrada, con notación distinta**
-- Elias (E5b) la escribe en función de α (αv, αf, σ²).
-- Mariano (M3) la escribe en función de δ (δv, δf, σ²).
-- (Además está la ecuación cuadrática de la que sale, en el apéndice de Elias,
-  E6b.)
-- Es la misma ε —en el paper, las ecuaciones (5) y (12) son equivalentes—, pero
-  el público la ve dos veces con variables distintas.
-
----
-
-## 3. Falta que Mariano confirme
+## 2. Falta que Mariano confirme
 
 **X\***: en el borrador de Mariano, X* se usaba a la vez para el valor de la
 opción (slide "Saltos en Vₜ") y para la tasa de descuento requerida (slide
@@ -114,7 +74,7 @@ esa tasa.
 
 ---
 
-## 4. Pendiente final
+## 3. Pendiente final
 
 - Borrar las 4 diapositivas divisorias (nombres de los integrantes) — se hace al
   final de todo.
