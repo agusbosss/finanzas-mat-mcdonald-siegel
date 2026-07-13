@@ -62,7 +62,7 @@
   \end{itemize}
 \end{frame}
 
-% (Sección II del paper) — V y F, con el supuesto de MBG integrado
+% (Sección II del paper) — V y F (MBG) + supuesto de vida infinita
 \begin{frame}{El problema de inversión}
   \begin{itemize}
     \item En cualquier momento $t$, la firma puede pagar un costo \az{$F_t$}
@@ -76,13 +76,17 @@
     \qquad\qquad
     \rj{\frac{dF}{F}} = \az{\alpha_f\,dt + \sigma_f\,dz_f}
   \end{ec}
+  \vspace{-4.5mm}
   \begin{itemize}
     \item El MBG permite derivar las ecuaciones de valuación y hace del cero
           una \concepto{barrera absorbente} natural.
+    \item La oportunidad tiene \concepto{vida infinita} (\az{$T=\infty$}): sin
+          fecha de vencimiento, el umbral óptimo es constante y hay solución
+          analítica.
   \end{itemize}
 \end{frame}
 
-% Caso especial: costo fijo (movido a continuación de V y F)
+% Caso especial: costo fijo (a continuación de V y F)
 \begin{frame}{Caso especial: costo de inversión fijo}
   \begin{itemize}
     \item Si el costo \az{$F$} es constante, su volatilidad y su deriva se
@@ -99,6 +103,23 @@
   \end{itemize}
 \end{frame}
 
+% Vencimiento — incorpora el supuesto de salto de Poisson
+% OJO: se solapa con las slides de Mariano (Saltos en Vt / obsolescencia) → NOTAS-CONFLICTOS.md
+\begin{frame}{¿Y si la oportunidad puede vencer?}
+  \begin{itemize}
+    \item Con fecha de vencimiento fija ($T<\infty$) \resultado{no hay
+          solución analítica}: cerca del límite, la frontera óptima de
+          ejercicio cambia con el calendario y se necesitan métodos numéricos
+          (árboles binomiales, diferencias finitas).
+    \item Con \concepto{vencimiento incierto} sí: se modela con un
+          \concepto{salto de Poisson}, probabilidad constante \az{$\lambda\,dt$}
+          de que \rj{$V$} caiga a cero (obsolescencia, entrada de un rival).
+    \item La estructura analítica queda idéntica al caso base; el riesgo de
+          salto solo penaliza la tasa de descuento:
+  \end{itemize}
+  \cajaec{\az{\mu} \;\longrightarrow\; \rj{\mu + \lambda}}
+\end{frame}
+
 \begin{frame}{Un mismo marco, varios problemas}
   \begin{itemize}
     \item \concepto{Monopolista}: tras instalar la capacidad queda protegido
@@ -113,64 +134,43 @@
   \end{itemize}
 \end{frame}
 
-% (Sección III del paper) — tabla sin MBG (→ slide V y F) ni Poisson (→ slide vencer)
-\begin{frame}{Supuestos del modelo}
-  Los demás supuestos que sostienen la solución analítica cerrada:
-  \par\vspace{2mm}
-  {\fontsize{9}{12}\selectfont
-   \renewcommand{\arraystretch}{1.5}%
-   \setlength{\tabcolsep}{4.5pt}%
-   \arrayrulecolor{grispie}%
-   \noindent\begin{tabular}{>{\raggedright\arraybackslash\bfseries\color{navy}}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}}
-     \rowcolor{gristitulo}
-     \multicolumn{1}{l}{\textcolor{navy}{\textbf{Supuesto}}} &
-     \multicolumn{1}{l}{\textcolor{navy}{\textbf{¿En qué consiste?}}} &
-     \multicolumn{1}{l}{\textcolor{navy}{\textbf{¿Por qué es necesario?}}} \\
-     Vida infinita ($T=\infty$) &
-     La oportunidad no vence en ninguna fecha del calendario. &
-     Sin tiempo calendario, el umbral $C^*$ es constante: solución analítica. \\ \hline
-     Inversores diversificados &
-     Opciones y proyectos pertenecen a portafolios bien diversificados. &
-     Aversión al riesgo solo vía riesgo sistemático (CAPM). \\ \hline
-     Deriva acotada ($\alpha_v<\mu$) &
-     $V$ crece en esperanza menos que la tasa de descuento requerida. &
-     Evita que la opción valga infinito (esperar para siempre). \\
-   \end{tabular}}
+% CAPM — supuesto de inversores diversificados + rol del CAPM en la tasa de descuento
+% (viene del cuadro de supuestos, ahora desarmado)
+% OJO: se solapa con la slide de CAPM de Mariano (derivación de μ) → NOTAS-CONFLICTOS.md
+\begin{frame}{CAPM}
+  \begin{itemize}
+    \item Opciones y proyectos pertenecen a \concepto{portafolios bien
+          diversificados}: la aversión al riesgo entra solo a través del
+          \concepto{riesgo sistemático}.
+    \item Ese supuesto habilita usar el \concepto{CAPM} para fijar la tasa de
+          descuento correcta de los flujos: la \resultado{tasa de rendimiento
+          de equilibrio} exigida a la inversión.
+  \end{itemize}
+  \begin{cajatexto}
+    El CAPM es la pieza que permite obtener \az{$\mu$}, la tasa a la que se
+    descuentan los flujos. Su desarrollo se retoma más adelante.
+  \end{cajatexto}
 \end{frame}
 
-% Dividendo — fórmula mu/alfa reacomodada (δ = μ − α_v  ⟹  α_v < μ)
+% Dividendo — caja original (δ = μ − α_v ⟹ α_v = μ − δ < μ) + línea "por lo tanto α_v < μ"
 \begin{frame}{¿Por qué $\alpha_v < \mu$? La analogía del dividendo}
   \begin{itemize}
     \item Mientras la firma no invierte, posterga los flujos de caja que el
           proyecto ya estaría repartiendo. Ese costo de oportunidad es el
           \concepto{rendimiento por dividendos} \az{$\delta$}.
   \end{itemize}
-  \cajaec{\az{\delta} = \az{\mu} - \rj{\alpha_v}}
-  \vspace{-1.5mm}
+  \cajaec{\az{\delta} = \az{\mu} - \rj{\alpha_v}
+          \;\;\Longrightarrow\;\;
+          \rj{\alpha_v} = \az{\mu - \delta} < \az{\mu}}
+  \vspace{-2mm}
   \begin{ec}
-    \text{Por lo tanto:}\quad \rj{\alpha_v} = \az{\mu - \delta} < \az{\mu}
+    \text{Por lo tanto:}\quad \rj{\alpha_v} < \az{\mu}
   \end{ec}
-  \vspace{-4mm}
+  \vspace{-3mm}
   \begin{itemize}
     \item \az{$\mu$} es el retorno total de equilibrio; como parte llega como
           dividendo (\az{$\delta > 0$}), el valor latente se aprecia más lento.
     \item Si fuese \az{$\alpha_v \geq \mu$}, la opción \resultado{divergiría a
           infinito} y la firma jamás invertiría.
   \end{itemize}
-\end{frame}
-
-% Vencimiento — incorpora el supuesto de salto de Poisson
-\begin{frame}{¿Y si la oportunidad puede vencer?}
-  \begin{itemize}
-    \item Con fecha de vencimiento fija ($T<\infty$) \resultado{no hay
-          solución analítica}: cerca del límite, la frontera óptima de
-          ejercicio cambia con el calendario y se necesitan métodos numéricos
-          (árboles binomiales, diferencias finitas).
-    \item Con \concepto{vencimiento incierto} sí: se modela con un
-          \concepto{salto de Poisson}, probabilidad constante \az{$\lambda\,dt$}
-          de que \rj{$V$} caiga a cero (obsolescencia, entrada de un rival).
-    \item La estructura analítica queda idéntica al caso base; el riesgo de
-          salto solo penaliza la tasa de descuento:
-  \end{itemize}
-  \cajaec{\az{\mu} \;\longrightarrow\; \rj{\mu + \lambda}}
 \end{frame}
