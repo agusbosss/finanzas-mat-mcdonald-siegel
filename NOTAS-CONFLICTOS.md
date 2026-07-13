@@ -1,105 +1,120 @@
-# Conflictos a revisar con el grupo
+# Puntos a revisar con el grupo
 
-Lista de cosas que **habría que cambiar o coordinar** antes de cerrar la
-presentación. Cada punto trae la acción concreta. Lista viva.
-
-**Orden actual de exposición:** Felipe → Elias → Mariano → Agustín.
+Cosas para revisar y coordinar entre las partes antes de cerrar la
+presentación. Orden de exposición: **Felipe → Elias → Mariano → Agustín**.
 
 ---
 
-## 1. Solapamientos de contenido (decidir quién desarrolla qué)
+## 1. Solapamientos de contenido (un mismo tema tratado en dos partes)
 
-**1.1 Caso F constante / costo fijo**
-- Felipe: "Caso especial: costo de inversión fijo" (σf = 0, αf = 0).
-- Elias: E2 "Umbral de inversión: el caso F constante".
-- Felipe lo presenta como caso especial del modelo general; Elias lo usa como
-  puerta de entrada pedagógica. Se pisan.
-- **Cambio:** definir quién lo introduce. P. ej. Felipe solo lo nombra como caso
-  límite y Elias lo desarrolla como entrada.
+**1.1 El caso de costo de inversión fijo (F constante)**
+En el modelo general V y F son estocásticos. Cuando F es constante (σf = 0,
+αf = 0) el problema colapsa a una sola variable, V, y se vuelve la opción
+americana perpetua clásica, con solución analítica cerrada.
+- Felipe, en "Caso especial: costo de inversión fijo", lo presenta como una
+  simplificación del modelo general de dos variables.
+- Elias, en E2 "Umbral de inversión: el caso F constante", lo usa como punto de
+  partida pedagógico para después construir el modelo general.
+- Los dos arrancan del mismo caso pero con lógica opuesta (Felipe va de lo
+  general a lo particular; Elias, de lo particular a lo general), y aparece en
+  dos momentos distintos de la charla.
 
-**1.2 CAPM**
-- Felipe: slide "CAPM" (setup: inversores diversificados + el CAPM da μ).
-- Mariano: M1–M2 (derivación efectiva de μ vía CAPM).
-- **Cambio:** que Felipe quede como setup y Mariano como desarrollo; revisar que
-  el discurso no se repita.
+**1.2 El CAPM y la tasa de descuento μ**
+Para valuar la opción hace falta una tasa de descuento μ que refleje el riesgo.
+El paper la obtiene con el CAPM, bajo el supuesto de que los inversores están
+bien diversificados (solo importa el riesgo sistemático).
+- Felipe tiene una slide "CAPM" que introduce ese supuesto y anticipa que el
+  CAPM servirá para obtener μ.
+- Mariano (M1–M2) hace la derivación efectiva: aplica Itô y el CAPM y llega a
+  μ = εα̂v + (1−ε)α̂f.
+- Los dos tocan el CAPM. Hay que ver cuánto dice cada uno para que la slide de
+  Felipe quede como introducción y no repita lo que después desarrolla Mariano.
 
-**1.3 Poisson / vencimiento incierto (μ → μ+λ)**
-- Felipe: "¿Y si la oportunidad puede vencer?" (lo menciona).
-- Mariano: M7 "Saltos en Vₜ" + M8 "Impacto de la obsolescencia" (desarrollo
-  completo).
-- Agustín: Tablas I/II bloque 2 y estáticas usan λ.
-- **Cambio:** que Felipe lo mencione al pasar (o achicar la slide) para no
-  adelantar lo de Mariano.
+**1.3 El vencimiento incierto y el salto de Poisson (μ → μ+λ)**
+Si el proyecto puede volverse obsoleto de golpe (V cae a cero de un salto), se
+modela con un salto de Poisson de intensidad λ y el riesgo se absorbe sumando λ
+a la tasa de descuento (μ → μ+λ).
+- Felipe lo menciona en "¿Y si la oportunidad puede vencer?".
+- Mariano lo desarrolla a fondo en "Saltos en Vₜ" e "Impacto de la
+  obsolescencia" (proceso mixto Poisson–Wiener, valor X*, la ε con λ, y la
+  comparación con Merton 1976).
+- Agustín lo aplica numéricamente (bloque de λ en las Tablas I y II, y en las
+  estáticas).
+- El mismo tema aparece en tres partes; hay que ver que Felipe no adelante lo
+  que después profundiza Mariano.
 
-**1.4 Estáticas comparativas**
-- Elias: E9 "Estáticas comparativas" (analíticas, en función de α).
-- Agustín: "Estáticas comparativas de las Tablas I y II" (numéricas, en función
-  de δ).
-- Mismo título y tema, con notación distinta: "X crece en αv" (Elias) y "el valor
-  baja si δv sube" (Agustín) son lo mismo dicho al revés.
-- **Cambio:** cambiar uno de los dos títulos y aclarar que describen el mismo
-  fenómeno.
+**1.4 Las estáticas comparativas**
+Cómo cambian el valor de la opción y el umbral C* al mover los parámetros.
+- Elias (E9) las presenta de forma analítica/cualitativa, en función de α: el
+  valor de la opción crece con σ², crece con αv, y decrece con αf y con μ.
+- Agustín las presenta de forma numérica a partir de las Tablas I y II, en
+  función de δ: efecto de σ², δf, δv, ρvf y λ.
+- Las dos slides se llaman casi igual ("Estáticas comparativas") y encima usan
+  notación distinta: "el valor crece con αv" (Elias) y "el valor baja si δv
+  sube" (Agustín) son lo mismo (porque δv = α̂v − αv), pero dicho al revés, lo
+  que puede confundir.
 
-**1.5 "T finito → no hay solución analítica"**
-- Felipe: en "¿Y si vence?".
-- Elias: en E8 "Aclaraciones" (Ingersoll 1977).
-- **Cambio:** que la afirmación quede en una sola de las dos.
-
----
-
-## 2. Notación (unificar símbolos y términos)
-
-**2.1 Retorno requerido de V: α̂v (Mariano) vs ᾱv (Agustín)**
-- Mariano: α̂v (sombrero); δv = α̂v − αv.
-- Agustín (monopolista): ᾱv (barra); δv = ᾱv − αv.
-- **Cambio:** unificar a un solo símbolo (sombrero o barra).
-
-**2.2 El "dividendo" δ de Felipe vs δv de Mariano — el más delicado**
-- Felipe: δ = μ − αv; condición αv < μ.
-- Mariano: δv = α̂v − αv; y define μ = εα̂v + (1−ε)α̂f como la tasa de la *opción*
-  (promedio ponderado).
-- Con el mismo símbolo μ para dos cosas, "αv < μ" y "δv > 0" parecen condiciones
-  distintas cuando deberían ser la misma.
-- **Cambio:** dejar explícito que el μ de "δ = μ − αv" es el retorno exigido a V, y
-  que αv < μ ⟺ δv > 0 ⟺ ε > 1.
-
-**2.3 Nombre de δ**
-- Felipe: "rendimiento por dividendos". Mariano: "costo de oportunidad".
-- **Cambio:** alinear a un solo término.
-
-**2.4 Umbrales C*, c*, Ĉ, Cₜ***
-- C* (sobre V/F), c* (sobre F/V, desguace — Mariano M6), Ĉ (determinístico,
-  Mariano M5 = δf/δv), Cₜ* (con calendario, Elias E2).
-- **Cambio:** agregar una línea que aclare las variantes para que no confundan.
-
-**2.5 La ε aparece dos veces en forma cerrada**
-- Elias E5b (en función de α) y Mariano M3 (en función de δ), más la cuadrática de
-  Elias E6b.
-- **Cambio:** aclarar que es la misma ε (ec. 5 = ec. 12 del paper), reescrita.
+**1.5 "Con T finito no hay solución analítica"**
+Con fecha de vencimiento fija (T < ∞) la frontera óptima de ejercicio depende
+del calendario y no hay fórmula cerrada: se necesitan métodos numéricos.
+- Felipe lo dice en "¿Y si la oportunidad puede vencer?".
+- Elias lo repite en E8 "Aclaraciones" (citando a Ingersoll, 1977).
+- La misma afirmación aparece en las dos partes.
 
 ---
 
-## 3. Cierre circular (coordinar con Agustín)
+## 2. Notación (símbolos y términos que no coinciden entre partes)
 
-Las Conclusiones de Agustín listan como limitaciones **MBG**, **inversión
-indivisible** e **irreversibilidad total** — que son supuestos que introduce
-Felipe (inversión toda de una vez, irreversibilidad, MBG).
-- **Cambio:** que Agustín los retome explícitamente como algo ya planteado, no
-  como si fuera nuevo.
+**2.1 Qué es μ, y la equivalencia entre "αv < μ" y "δv > 0" (el más delicado)**
+δ es la diferencia entre el retorno requerido y la deriva (en el paper, la
+"payout rate").
+- Felipe escribe δ = μ − αv y usa la condición αv < μ.
+- Mariano define δv = α̂v − αv, y a μ la define como la tasa de descuento de la
+  *opción*: μ = εα̂v + (1−ε)α̂f (un promedio ponderado de los retornos de V y F).
+- Con el mismo símbolo μ para dos cosas distintas (el retorno exigido a V y el
+  de la opción), "αv < μ" (Felipe/Elias) y "δv > 0" (Mariano) parecen
+  condiciones distintas, cuando en el paper son la misma (δv = α̂v − αv > 0 ⟺
+  αv < α̂v, y eso garantiza ε > 1). Hay que definir qué es μ en cada lugar y
+  dejar clara la equivalencia.
+
+**2.2 Cómo llamamos a δ**
+- Felipe lo llama "rendimiento por dividendos"; Mariano, "costo de oportunidad".
+- En el paper δ es la "payout rate", y a δv·V y δf·F los llama explícitamente
+  "opportunity cost" (de no instalar, y de diferir). El dividendo es una
+  analogía (la opción sobre una acción que paga dividendos, à la Samuelson), no
+  el nombre técnico.
+- Hay que usar un solo término en toda la presentación.
+
+**2.3 Los distintos umbrales: C*, c*, Ĉ, Cₜ***
+- C*: umbral sobre el ratio V/F (el principal).
+- c*: umbral sobre F/V, en el desguace (Mariano M6).
+- Ĉ: umbral del caso determinístico, Ĉ = δf/δv (Mariano M5).
+- Cₜ*: umbral que depende del calendario, en el caso con vencimiento (Elias E2).
+- Son cuatro variantes con nombres muy parecidos; hay que revisar que el
+  público las distinga.
+
+**2.4 La ε aparece dos veces en forma cerrada, con notación distinta**
+- Elias (E5b) la escribe en función de α (αv, αf, σ²).
+- Mariano (M3) la escribe en función de δ (δv, δf, σ²).
+- (Además está la ecuación cuadrática de la que sale, en el apéndice de Elias,
+  E6b.)
+- Es la misma ε —en el paper, las ecuaciones (5) y (12) son equivalentes—, pero
+  el público la ve dos veces con variables distintas.
 
 ---
 
-## 4. Decisión de notación ya aplicada (confirmar con Mariano)
+## 3. Falta que Mariano confirme
 
-- **X\***: en el borrador de Mariano se usaba a la vez para el valor de la opción y
-  para la tasa requerida. Quedó X* solo para el valor; la tasa como
-  "r + ε(α̂v − r)". Confirmar con Mariano.
+**X\***: en el borrador de Mariano, X* se usaba a la vez para el valor de la
+opción (slide "Saltos en Vₜ") y para la tasa de descuento requerida (slide
+"Impacto de la obsolescencia"). Al pasarlo a las láminas quedó X* solo para el
+valor de la opción, y la tasa se escribió como "r + ε(α̂v − r)", sin símbolo.
+Falta que Mariano confirme si está de acuerdo o si prefiere ponerle un nombre a
+esa tasa.
 
 ---
 
-## 5. Pendientes generales (logística, no conflictos)
+## 4. Pendiente final
 
-- Confirmar la **fecha** de la presentación (placeholder "julio de 2026").
-- Borrar las 4 diapositivas **divisorias** (nombres de integrantes) en la versión
-  final.
-- Repartir **tiempos** por orador (la presentación va en ~47 láminas).
+- Borrar las 4 diapositivas divisorias (nombres de los integrantes) — se hace al
+  final de todo.
