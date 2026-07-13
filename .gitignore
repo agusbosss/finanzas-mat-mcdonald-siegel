@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Log de compilación (transitorio, lo regenera compilar.sh)
+presentacion/.build.log

@@ -1,0 +1,145 @@
+% ============================================================
+% PARTE ELIAS — desarrollo hasta el modelo general y comentarios
+% (adaptado de las slides 8–12 del borrador del grupo)
+% Fórmulas cotejadas con McDonald-Siegel (1986), Secc. III + Apéndice.
+% ============================================================
+\divisoria{Elias Hwang}% TEMPORAL: borrar en la versión final
+
+% E1 — hoja de ruta de la sección (OJO: se solapa con el Sumario de Felipe)
+\begin{frame}{La sección: qué se deriva}
+  Se construye la \resultado{regla de decisión óptima} y el valor de la
+  oportunidad de inversión, en tres pasos:
+  \par\vspace{3mm}
+  \begin{enumerate}
+    \item \rj{$V$} y \az{$F$} siguen movimientos brownianos geométricos.
+    \item Se obtiene la \concepto{tasa de descuento correcta} cuando los
+          inversores son reacios al riesgo.
+    \item Se admite que \rj{$V_t$} pueda caer repentinamente a cero.
+  \end{enumerate}
+\end{frame}
+
+% E2 — caso F constante, umbral Ct*
+\begin{frame}{Umbral de inversión: el caso $F$ constante}
+  Para introducir el problema, \rj{$V_t$} sigue un MBG y \az{$F$} es
+  constante. La firma recibe \rj{$V_t$}$-$\az{$F$} al invertir, y la regla
+  óptima es un \concepto{umbral}: invertir cuando
+  \rj{$V_t$}$/$\az{$F$} $\geq$ \rj{$C_t^*$}.
+  \par\vspace{2.5mm}
+  Si la oportunidad vence en $T$: allí conviene invertir si
+  \rj{$V_T$}$\geq$\az{$F$}, o sea \rj{$C_T^*$}$=1$; hacia atrás en el tiempo,
+  cada instante $t$ tiene su umbral \rj{$C_t^*$}.
+  \par\vspace{2.5mm}
+  En \rj{$V_t$}$/$\az{$F$}$=$\rj{$C_t^*$}, el VAN es
+  \az{$F$}$($\rj{$C_t^*$}$-1)$. Para una barrera arbitraria, el valor de la
+  oportunidad es el valor presente esperado del payoff:
+  \begin{ecmed}
+    \rj{X(T)} = \az{E_0\bigl\{ e^{-\mu t'}\,( V_{t'} - F ) \bigr\}}
+  \end{ecmed}
+\end{frame}
+
+% E3 — vida infinita
+\begin{frame}{Vida infinita: el umbral se vuelve constante}
+  Cuando la oportunidad tiene \concepto{vida infinita} ($T\to\infty$)
+  desaparece el tiempo calendario: el umbral no puede depender de $t$, así
+  que \rj{$C_t^*$}$=$\rj{$C^*$} para todo $t$.
+  \par\vspace{4mm}
+  Entonces \rj{$V_{t'}$}$-$\az{$F$}$=$\az{$F$}$($\rj{$C^*$}$-1)$ es constante,
+  y maximizar \rj{$X(T)$} se reduce a
+  \begin{ec}
+    \max_{C'}\; \az{F\,(C' - 1)\; E_0\bigl\{ e^{-\mu t'} \bigr\}}
+  \end{ec}
+  Es un caso especial del problema general que sigue.
+\end{frame}
+
+% E4 — modelo general + homogeneidad
+\begin{frame}{Modelo general: $F$ también estocástico}
+  Ahora \az{$F_t$} también es aleatorio y sigue un MBG. La caracterización
+  del umbral ya no es evidente, pero la regla sigue siendo de umbral sobre el
+  ratio \rj{$V$}$/$\az{$F$}.
+  \par\vspace{3mm}
+  \concepto{Homogeneidad de grado cero}: con \rj{$V'=kV$} y \az{$F'=kF$} el
+  problema es formalmente idéntico, de modo que el umbral no depende de $k$
+  (es homogéneo de grado cero en \rj{$V$}, \az{$F$}) ni del calendario cuando
+  $T\to\infty$.
+  \begin{cajatexto}
+    Regla óptima: invertir cuando \rj{$V_t$}$/$\az{$F_t$} $\geq$ \rj{$C^*$}.
+  \end{cajatexto}
+\end{frame}
+
+% E5 — la solución (X, epsilon)
+\begin{frame}{La solución del modelo general}
+  El apéndice demuestra que la región de inversión es
+  $[$\rj{$C^*$}$,\infty)$. El valor de la oportunidad es
+  \begin{ec}
+    \rj{X} = \az{(C^* - 1)\,F_0
+      \left(\frac{V_0/F_0}{C^*}\right)^{\!\varepsilon}}
+  \end{ec}
+  \begin{ecmed}
+    \az{\varepsilon = \sqrt{\left(\frac{\alpha_v-\alpha_f}{\sigma^2}
+      - \frac12\right)^{\!2} + \frac{2(\mu-\alpha_f)}{\sigma^2}}
+      + \left(\frac12 - \frac{\alpha_v-\alpha_f}{\sigma^2}\right)}
+  \end{ecmed}
+  con \az{$\sigma^2 = \sigma_v^2 + \sigma_f^2 - 2\rho_{vf}\sigma_v\sigma_f$}.
+  La condición \az{$\alpha_v<\mu$} garantiza \rj{$\varepsilon>1$}.
+\end{frame}
+
+% E6 — apéndice: la EDP de Feynman-Kac
+\begin{frame}{Desarrollo matemático (apéndice)}
+  En la barrera el payoff es \rj{$V$}$-$\az{$F$}$=$\az{$F$}$($\rj{$C^*$}$-1)$,
+  y el valor \az{$L(V,F)=E_0\{F_{t'}\,e^{-\mu t'}\}$} satisface, por
+  \concepto{Feynman--Kac}:
+  \begin{ecmed}
+    \az{\mu L = \tfrac12\!\left[L_{vv}V^2\sigma_v^2 + L_{ff}F^2\sigma_f^2
+      + 2 L_{vf}VF\sigma_{vf}\right] + L_v \alpha_v V + L_f \alpha_f F}
+  \end{ecmed}
+  Con la forma \az{$L = k\,F\,C^{\,b}$} y las condiciones de contorno se llega a
+  \begin{ecmed}
+    \az{\mu = \tfrac12\, b\,(b-1)\,\sigma^2 + b\,\alpha_v + (1-b)\,\alpha_f},
+    \qquad \rj{b = \varepsilon}
+  \end{ecmed}
+\end{frame}
+
+% E7 — C* óptimo
+\begin{frame}{El umbral óptimo $C^* = \varepsilon/(\varepsilon-1)$}
+  Maximizando el valor \rj{$X$} respecto de la barrera \rj{$C^*$}:
+  \begin{ec}
+    \frac{dX}{dC^*} = 0 \;\;\Longrightarrow\;\;
+    \az{(1-\varepsilon)\,C^* + \varepsilon = 0}
+    \;\;\Longrightarrow\;\;
+    \rj{C^* = \frac{\varepsilon}{\varepsilon-1}}
+  \end{ec}
+  Como \rj{$\varepsilon>1$}, resulta \rj{$C^*>1$}: el umbral óptimo
+  \resultado{siempre supera} el punto donde el VAN se anula.
+\end{frame}
+
+% E8 — aclaraciones
+\begin{frame}{Aclaraciones sobre el modelo general}
+  \begin{itemize}
+    \item Si \az{$F$} es no estocástico, \rj{$X$} coincide con la fórmula de
+          \concepto{Samuelson (1970)} para una call americana de vida
+          infinita sobre una acción que paga dividendos.
+    \item Si $T$ es finito, o si los parámetros dependen de \rj{$V$}, \az{$F$}
+          y $t$, \resultado{no hay solución analítica}: se recurre a
+          aproximaciones numéricas (Ingersoll, 1977).
+  \end{itemize}
+\end{frame}
+
+% E9 — estáticas comparativas analíticas (OJO: se solapa con Agustín/Tablas I-II)
+\begin{frame}{Estáticas comparativas}
+  \begin{itemize}
+    \item \rj{$X$} y \rj{$C^*$} son \resultado{crecientes en la varianza} de
+          \rj{$V$}$/$\az{$F$}: más varianza amplía la ganancia máxima y deja
+          igual la pérdida máxima.
+    \item Solo interviene \az{$\sigma^2 = \sigma_v^2+\sigma_f^2-2\rho_{vf}
+          \sigma_v\sigma_f$}: un aumento de \az{$\sigma_v^2$} o
+          \az{$\sigma_f^2$}, o una caída de \az{$\rho_{vf}$}, eleva el valor
+          de la opción.
+    \item \rj{$X$} es creciente en \az{$\alpha_v$} y decreciente en
+          \az{$\alpha_f$} y \az{$\mu$}.
+  \end{itemize}
+  \begin{cajatexto}
+    El análisis referido solo a las derivas es de interés limitado: lo que
+    importa son los costos de oportunidad \az{$\delta_v$}, \az{$\delta_f$}
+    (sección siguiente).
+  \end{cajatexto}
+\end{frame}

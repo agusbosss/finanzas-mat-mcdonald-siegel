@@ -1,0 +1,104 @@
+% ============================================================
+% PARTE MARIANO — tasa de descuento y saltos en Vt;
+% más adelante, papers posteriores
+% (implementadas las 4 primeras slides finales del borrador de Mariano)
+% Fórmulas cotejadas con McDonald-Siegel (1986), ecs. (8),(10),(12),(13),(14).
+% ============================================================
+\divisoria{Mariano Sanchez}% TEMPORAL: borrar en la versión final
+
+% M1 — cálculo de la tasa de descuento (Itô, ec. 8)
+\begin{frame}{Cálculo de la tasa de descuento}
+  Hasta acá se dio por sentada la tasa \az{$\mu$} a la que se descuentan los
+  flujos. Se demuestra que la tasa esperada de equilibrio de la oportunidad
+  debe ser un \concepto{promedio ponderado} de las tasas de activos con el
+  mismo riesgo que \rj{$V$} y \az{$F$}.
+  \par\vspace{2mm}
+  Aplicando el lema de Itô al valor de la opción \rj{$X$}:
+  \begin{ecmed}
+    \rj{\frac{dX}{X}} = \az{\bigl[\varepsilon\alpha_v + (1-\varepsilon)\alpha_f
+      + \tfrac12\varepsilon(\varepsilon-1)\sigma^2\bigr]dt}
+      + \underbrace{\az{\varepsilon\sigma_v\,dz_v
+      + (1-\varepsilon)\sigma_f\,dz_f}}_{\text{componente imprevisto}}
+  \end{ecmed}
+  con \az{$\sigma^2 = \sigma_v^2 + \sigma_f^2 - 2\rho_{vf}\sigma_v\sigma_f$}.
+  El retorno de la opción es un promedio ponderado (\az{$\varepsilon$},
+  \az{$1-\varepsilon$}) de los de \rj{$V$} y \az{$F$}.
+\end{frame}
+
+% M2 — aplicación del CAPM -> mu
+\begin{frame}{Aplicación del CAPM al riesgo}
+  El único riesgo de la opción es su componente imprevisto. Bajo el CAPM, un
+  riesgo \az{$\sigma_j\,dz_j$} exige una tasa \az{$\hat{\alpha}_j$}, y un
+  riesgo \az{$\nu\sigma_j\,dz_j$} exige \az{$r + \nu(\hat{\alpha}_j - r)$}.
+  \par\vspace{3mm}
+  Aplicándolo a los pesos \az{$\varepsilon$} y \az{$1-\varepsilon$}, la tasa
+  de rendimiento esperada de equilibrio es
+  \begin{ec}
+    \rj{\mu} = \az{r + \varepsilon(\hat{\alpha}_v - r)
+      + (1-\varepsilon)(\hat{\alpha}_f - r)
+      = \varepsilon\hat{\alpha}_v + (1-\varepsilon)\hat{\alpha}_f}
+  \end{ec}
+\end{frame}
+
+% M3 — epsilon en términos de delta
+\begin{frame}{La solución para $\varepsilon$ en términos de $\delta$}
+  Igualando el rendimiento requerido con el efectivo, la solución cuadrática
+  para \rj{$\varepsilon$} queda en términos de los costos de oportunidad
+  \az{$\delta_v = \hat{\alpha}_v - \alpha_v$}, \az{$\delta_f = \hat{\alpha}_f
+  - \alpha_f$}:
+  \begin{ecmed}
+    \rj{\varepsilon} = \az{\sqrt{\left(\frac{\delta_f-\delta_v}{\sigma^2}
+      - \frac12\right)^{\!2} + \frac{2\delta_f}{\sigma^2}}
+      + \left(\frac12 - \frac{\delta_f-\delta_v}{\sigma^2}\right)}
+  \end{ecmed}
+  \begin{itemize}
+    \item Los drift \az{$\alpha$} \resultado{no importan por sí solos}: lo que
+          entra en la solución son los \concepto{costos de oportunidad}
+          \az{$\delta_v$}, \az{$\delta_f$}.
+    \item Dos proyectos con riesgo sistemático opuesto pueden valer lo mismo,
+          según los estados en que generen rendimiento.
+  \end{itemize}
+\end{frame}
+
+% M4 — análisis de los parámetros delta
+\begin{frame}{Los parámetros $\delta_v$ y $\delta_f$}
+  \concepto{Costo de mantener la opción} (\az{$\delta_v$}):
+  \begin{itemize}
+    \item Parte del rendimiento exigido de \rj{$V$} a la que se renuncia al
+          percibir solo aumentos de precio.
+    \item Si \az{$\delta_v$} sube: la inversión óptima se adelanta (menor
+          umbral \rj{$V$}$/$\az{$F$}) y la opción \resultado{vale menos}.
+    \item Más riesgo sistemático de \rj{$V$} (con \az{$\alpha_v$} constante)
+          eleva \az{$\delta_v$}.
+  \end{itemize}
+  \par\vspace{2mm}
+  \concepto{Beneficio de postergar} (\az{$\delta_f$}):
+  \begin{itemize}
+    \item Rendimiento de \az{$F$} al que se renuncia al obtener solo aumentos
+          de precio (costo aplazado).
+    \item Si \az{$\delta_f$} sube: mayor beneficio por esperar, la opción
+          \resultado{vale más}. Más riesgo sistemático de \az{$F$} eleva
+          \az{$\delta_f$}.
+  \end{itemize}
+\end{frame}
+
+% M5 — caso sin y con incertidumbre (ec. 13, 14, 14')
+\begin{frame}{La regla de inversión: sin y con incertidumbre}
+  \concepto{Sin incertidumbre} (\az{$\sigma_v^2 = \sigma_f^2 = 0$}):
+  \begin{ecmed}
+    \rj{\hat{X}} = \az{(\hat{C} - 1)\,F_0
+      \left(\frac{V_0/F_0}{\hat{C}}\right)^{\!\delta_f/(\delta_f-\delta_v)}},
+    \quad \az{\hat{C} = \delta_f/\delta_v}, \quad
+    \text{\small invertir si } \az{V_0\delta_v \geq F_0\delta_f}
+  \end{ecmed}
+  \vspace{-1mm}
+  {\small\noindent Válido solo si \az{$\delta_v < \delta_f$}.}
+  \par\vspace{1mm}
+  \concepto{Con incertidumbre} (\az{$\sigma^2 > 0$}): la regla incorpora un
+  término extra \az{$h$}, el valor de esperar:
+  \begin{ecmed}
+    \az{V_0\,\delta_v \geq F_0\,\delta_f + h(V_0, F_0)}, \qquad \az{h > 0}
+  \end{ecmed}
+  Ese término \az{$h$} permite \resultado{captar ganancias y evitar pérdidas}
+  --- es lo que agrega la opción de esperar.
+\end{frame}

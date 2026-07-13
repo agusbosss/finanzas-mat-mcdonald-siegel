@@ -1,0 +1,213 @@
+% ============================================================
+% tema-slutsky.sty — Réplica del formato de las presentaciones
+% de Microeconomía I (Giolito), medido de "6.slutsky copy.pdf"
+% Slide 4:3 (128mm x 96mm en beamer)
+% ============================================================
+\ProvidesPackage{tema-slutsky}
+
+\RequirePackage{tikz}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{array,colortbl}
+
+% ---------- Paleta (muestreada del PDF original) ----------
+\definecolor{navy}{HTML}{002060}      % barras, títulos, pie
+\definecolor{gristitulo}{HTML}{E7E6E6}% banda del título
+\definecolor{grispie}{HTML}{D0CECE}   % pie derecho / franja sup. derecha
+\definecolor{rojo}{HTML}{EA0000}      % matemática roja (objeto definido / resultado)
+\definecolor{azul}{HTML}{0634B6}      % matemática azul (expresiones)
+\definecolor{azulclaro}{HTML}{0070C0} % borde de cajas, énfasis azul brillante, "Caso n"
+\definecolor{celeste}{HTML}{E0F7FF}   % relleno de cajas clave
+\definecolor{magenta}{HTML}{F21AD8}   % énfasis rosa (raro, para pares de conceptos)
+
+% ---------- Tipografía (Calibri -> Carlito, Cambria Math -> STIX Two) ----------
+\usefonttheme{professionalfonts}
+\RequirePackage[sfdefault]{carlito}
+\RequirePackage{unicode-math}
+\setmathfont{STIXTwoMath-Regular.otf}
+
+% ---------- Geometría medida ----------
+% franja superior: 0–2.9% alto (2.8mm), navy izq 50%, grispie der 50%
+% banda título:    2.9%–13% (9.7mm), gristitulo, texto navy ~20pt
+% pie:             96.4%–100% (3.4mm), navy izq (autor blanco), grispie der (materia navy)
+% número de página: arriba del pie, alineado a la derecha
+
+\setbeamersize{text margin left=6mm, text margin right=6mm}
+
+% ---------- Colores beamer ----------
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=navy}
+\setbeamercolor{frametitle}{fg=navy,bg=gristitulo}
+\setbeamercolor{title}{fg=navy}
+\setbeamercolor{subtitle}{fg=navy}
+\setbeamercolor{itemize item}{fg=black}
+\setbeamercolor{itemize subitem}{fg=black}
+\setbeamercolor{enumerate item}{fg=black}
+\setbeamercolor{enumerate subitem}{fg=black}
+\setbeamercolor{alerted text}{fg=rojo}
+\setbeamercolor{footautor}{fg=white,bg=navy}
+\setbeamercolor{footmateria}{fg=navy,bg=grispie}
+
+% ---------- Fuentes beamer ----------
+% (la réplica 1:1 del PPT quedaba grande: todo bajado ~1.5pt a pedido)
+\setbeamerfont{frametitle}{size={\fontsize{17.5}{19.5}},series=\mdseries}
+\setbeamerfont{title}{size={\fontsize{17.5}{21}},series=\mdseries}
+\setbeamerfont{subtitle}{size={\fontsize{10}{12.5}},series=\mdseries}
+\setbeamerfont{itemize/enumerate body}{size={\fontsize{11}{14}}}
+\setbeamerfont{itemize/enumerate subbody}{size={\fontsize{10}{12.5}}}
+\setbeamerfont{footline}{size={\fontsize{6.5}{7}}}
+
+% ---------- Sin adornos por defecto ----------
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+% ---------- Franja superior ----------
+\setbeamertemplate{headline}{%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.8mm,dp=0mm]{footautor}\end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.8mm,dp=0mm]{footmateria}\end{beamercolorbox}%
+  }%
+}
+
+% ---------- Banda de título ----------
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=7.4mm,dp=2.3mm,leftskip=3mm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle%
+  \end{beamercolorbox}%
+}
+
+% ---------- Pie ----------
+% texto del segmento izquierdo del pie (setear en main.tex con \renewcommand)
+\newcommand{\pieizquierdo}{}
+\setbeamertemplate{footline}{%
+  % número de página, arriba del pie a la derecha
+  \hbox to \paperwidth{\hfill\raise0.9mm\hbox{\fontsize{5}{5}\selectfont\color{black}\insertframenumber}\hskip 2mm}%
+  \nointerlineskip%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.6mm,dp=1.1mm,center]{footautor}%
+      \usebeamerfont{footline}\pieizquierdo%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.6mm,dp=1.1mm,center]{footmateria}%
+      \usebeamerfont{footline}\insertshortinstitute%
+    \end{beamercolorbox}%
+  }%
+}
+
+% ---------- Portada de trabajo final ----------
+% usar en un frame normal (con barras arriba/abajo), sin \frametitle
+% campos propios (setear en main.tex):
+\newcommand{\integranteslista}{}                                   % nombres separados con \\
+\newcommand{\integrantes}[1]{\renewcommand{\integranteslista}{#1}}
+\newcommand{\profesoranombre}{}
+\newcommand{\profesora}[1]{\renewcommand{\profesoranombre}{#1}}
+% \subtitle -> cita del paper (va dentro de la banda); \date -> fecha de presentación
+\setbeamertemplate{title page}{%
+  \vspace*{6mm}%
+  {\usebeamercolor[fg]{title}\fontsize{11.5}{14}\selectfont Universidad del CEMA\par}%
+  \vspace*{1mm}%
+  {\usebeamercolor[fg]{title}\fontsize{9}{11}\selectfont
+   Finanzas Matemáticas --- Trabajo Final\par}%
+  \vspace*{13mm}%
+  {\setlength{\fboxsep}{2.6mm}%
+   \noindent\hspace*{-6mm}%  compensa el margen de texto: banda a todo el ancho
+   \colorbox{gristitulo}{\hspace*{2.4mm}%
+     \parbox{\dimexpr\paperwidth-9.6mm\relax}{%
+       \raggedright\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par
+       \vspace*{1.4mm}%
+       {\usebeamerfont{subtitle}\usebeamercolor[fg]{title}\insertsubtitle\par}}%
+     \hspace*{2mm}}\par}%
+  \vspace*{12mm}%
+  \noindent\begin{minipage}[t]{0.54\textwidth}
+    {\usebeamercolor[fg]{title}\fontsize{9.5}{12}\selectfont\bfseries Integrantes\par}
+    \vspace*{1.6mm}%
+    {\usebeamercolor[fg]{title}\fontsize{10.5}{14.5}\selectfont\integranteslista\par}
+  \end{minipage}%
+  \begin{minipage}[t]{0.45\textwidth}
+    {\usebeamercolor[fg]{title}\fontsize{9.5}{12}\selectfont\bfseries Profesora\par}
+    \vspace*{1.6mm}%
+    {\usebeamercolor[fg]{title}\fontsize{10.5}{14.5}\selectfont\profesoranombre\par}
+    \vspace*{4.5mm}%
+    {\usebeamercolor[fg]{title}\fontsize{9.5}{12}\selectfont\bfseries Fecha de presentación\par}
+    \vspace*{1.6mm}%
+    {\usebeamercolor[fg]{title}\fontsize{10.5}{14.5}\selectfont\insertdate\par}
+  \end{minipage}\par
+  \vfill
+}
+
+% ---------- Divisoria de partes (TEMPORAL, se borra en la versión final) ----------
+% \divisoria{Nombre}: slide con banda gris y el nombre del integrante que sigue
+\newcommand{\divisoria}[1]{%
+  \begin{frame}%
+    \vfill
+    {\setlength{\fboxsep}{2.6mm}%
+     \noindent\hspace*{-6mm}%
+     \colorbox{gristitulo}{\hspace*{2.4mm}%
+       \parbox{\dimexpr\paperwidth-9.6mm\relax}{\centering
+         \usebeamerfont{title}\usebeamercolor[fg]{title}#1}%
+       \hspace*{2mm}}\par}%
+    \vfill
+  \end{frame}}
+
+% ---------- Listas ----------
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{\textbullet}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+\setlength{\leftmargini}{7mm}
+\setlength{\leftmarginii}{7mm}
+
+% espaciado generoso entre bullets, como el original
+\newcommand{\ajustaritemsep}{\setlength{\itemsep}{11pt}\setlength{\parskip}{0pt}}
+\let\origitemize\itemize
+\renewcommand{\itemize}{\origitemize\ajustaritemsep}
+\let\origenumerate\enumerate
+\renewcommand{\enumerate}{\origenumerate\ajustaritemsep}
+
+% texto alineado a la izquierda (PPT no justifica)
+\RequirePackage{ragged2e}
+\AtBeginDocument{\RaggedRight}
+
+% ============================================================
+% Macros semánticas (los colores como los usa el original)
+% ============================================================
+% matemática: lo que se define / resultado -> rojo; expresión -> azul
+\newcommand{\rj}[1]{{\color{rojo}#1}}
+\newcommand{\az}[1]{{\color{azul}#1}}
+\newcommand{\mg}[1]{{\color{magenta}#1}}
+\newcommand{\nv}[1]{{\color{navy}#1}}
+
+% énfasis en prosa (negrita+itálica coloreada)
+\newcommand{\concepto}[1]{\textcolor{azulclaro}{\textbf{\textit{#1}}}}   % concepto que se define
+\newcommand{\conceptonavy}[1]{\textcolor{navy}{\textbf{\textit{#1}}}}   % variante oscura
+\newcommand{\resultado}[1]{\textcolor{rojo}{\textbf{\textit{#1}}}}      % nombre clave / resultado
+\newcommand{\conceptomg}[1]{\textcolor{magenta}{\textbf{\textit{#1}}}}  % par de concepto (rosa)
+\newcommand{\caso}[1]{\textcolor{azulclaro}{\underline{#1}}}            % "Caso n:"
+
+% ---------- Ecuaciones display grandes (como el original) ----------
+% \begin{ec} ... \end{ec}  -> formula centrada ~29pt PPT
+\newenvironment{ec}
+  {\par\vspace{7pt}\begingroup\fontsize{13.5}{16.5}\selectfont\csname gather*\endcsname}
+  {\csname endgather*\endcsname\endgroup\vspace{7pt}\par}
+% versión más chica para pasos intermedios
+\newenvironment{ecmed}
+  {\par\vspace{6pt}\begingroup\fontsize{11.5}{14}\selectfont\csname gather*\endcsname}
+  {\csname endgather*\endcsname\endgroup\vspace{6pt}\par}
+
+% ---------- Cajas clave (celeste con borde azul) ----------
+\tcbset{cajabase/.style={enhanced,colback=celeste,colframe=azulclaro,
+  boxrule=0.9pt,sharp corners,left=3mm,right=3mm,top=1.8mm,bottom=1.8mm,
+  before upper=\RaggedRight}}
+% ecuación clave enmarcada, ancho al contenido, centrada
+\newcommand{\cajaec}[1]{%
+  \begin{center}%
+    \begin{tcolorbox}[cajabase,hbox]%
+      {\fontsize{13.5}{16.5}\selectfont$\displaystyle #1$}%
+    \end{tcolorbox}%
+  \end{center}}
+% caja de texto (nota/takeaway), ancho completo
+\newtcolorbox{cajatexto}{cajabase,before skip=8pt,after skip=8pt}
+
+% ---------- Pie de tabla (como la "Note." de las tablas del paper) ----------
+\newcommand{\pietabla}[1]{\par\vspace{1.2mm}%
+  {\fontsize{7.5}{9.5}\selectfont\emph{Nota.} #1\par}}

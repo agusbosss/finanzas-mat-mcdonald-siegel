@@ -1,0 +1,346 @@
+% ============================================================
+% PARTE AGUSTÍN — ejemplos con parámetros, ejemplo con monopolio
+% y conclusiones  (Secciones IV, V y VI del paper)
+% ============================================================
+\divisoria{Agustín Bossart}% TEMPORAL: borrar en la versión final
+
+% Las slides de esta parte son APOYO VISUAL del guion:
+% "Nota - Guion presentación (Secciones IV, V y VI).md"
+% Frases sueltas (sin bullets salvo enumeraciones); cada tabla con su pie
+% estilo paper ("Nota. ..."); la lectura en vivo la hace el orador.
+
+% Cabecera de tres filas para las Tablas I y II, como el paper:
+% delta_v (grupos) / rho_vf (columnas) / #1 = variable de fila del bloque
+\newcommand{\cabTablas}[1]{%
+  \rowcolor{gristitulo}
+  \multicolumn{1}{l}{$\delta_v$}
+  & \multicolumn{3}{c}{$0.05$}
+  & \multicolumn{3}{c}{$0.10$}
+  & \multicolumn{3}{c}{$0.25$} \\
+  \rowcolor{gristitulo}
+  \multicolumn{1}{l}{$\rho_{vf}$}
+  & $-0.5$ & $0.0$ & $0.5$
+  & $-0.5$ & $0.0$ & $0.5$
+  & $-0.5$ & $0.0$ & $0.5$ \\
+  \rowcolor{gristitulo}
+  \multicolumn{1}{l}{#1} & & & & & & & & & \\}
+
+% (Sección IV del paper — guion §1 y §2)
+\begin{frame}{Aplicación del modelo con ejemplos numéricos}
+  Todas las tablas se evalúan en el punto \rj{$V = F = 1$}: el primer punto
+  donde la regla clásica del VAN acepta la inversión.
+  \begin{ecmed}
+    \az{\sigma_v^2 = \sigma_f^2 = 0.04}, \qquad
+    \az{\delta_v = \delta_f = 0.10}, \qquad
+    \az{\rho_{vf} = 0}, \qquad \az{\lambda = 0}
+  \end{ecmed}
+  Datos para el caso base:
+  \begin{itemize}
+    \item \az{$\sigma = 0.20$}: desvío del equity desapalancado de EEUU.
+    \item \az{$\delta_v = 0.10$}: ratio ganancias/precio de un proyecto
+          instalado.
+    \item \az{$\delta_f = 0.10$}: tasa libre de riesgo, con \az{$F$}
+          determinístico.
+  \end{itemize}
+\end{frame}
+
+% Tabla I — bloque 1 (varianza)
+\begin{frame}{Valor de la oportunidad de inversión}
+  \vspace{2mm}
+  {\centering
+  {\fontsize{8}{11}\selectfont
+   \renewcommand{\arraystretch}{1.3}%
+   \setlength{\tabcolsep}{4pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l ccccccccc}
+     \cabTablas{$\sigma_v^2,\,\sigma_f^2$}
+     0.01 & 0.33 & 0.30 & 0.28 & 0.14 & 0.12 & 0.08 & 0.03 & 0.02 & 0.01 \\ \hline
+     0.02 & 0.38 & 0.34 & 0.30 & 0.20 & 0.16 & 0.12 & 0.06 & 0.04 & 0.02 \\ \hline
+     0.04 & \textbf{0.45} & \textbf{0.40} & \textbf{0.34} & \textbf{0.27} &
+     \cellcolor{celeste}\textbf{0.23} & \textbf{0.16} & \textbf{0.11} &
+     \textbf{0.08} & \textbf{0.04} \\ \hline
+     0.10 & 0.57 & 0.51 & 0.43 & 0.40 & 0.34 & 0.25 & 0.21 & 0.16 & 0.09 \\ \hline
+     0.20 & 0.67 & 0.61 & 0.51 & 0.52 & 0.45 & 0.34 & 0.32 & 0.25 & 0.16 \\ \hline
+     0.30 & 0.73 & 0.67 & 0.57 & 0.60 & 0.52 & 0.40 & 0.39 & 0.32 & 0.21 \\
+   \end{tabular}}\par}
+  \pietabla{Valor de la oportunidad de inversión cuando $V = F = 1$, por
+    dólar de proyecto, calculado con las ecuaciones (4) y (12). Bloque 1:
+    varianza ($\lambda = 0$, $\delta_f = 0.10$ fijos). Parámetros del caso
+    base: $\sigma_v^2 = \sigma_f^2 = 0.04$; $\delta_v = \delta_f = 0.10$;
+    $\lambda = 0$.}
+\end{frame}
+
+% Tabla I — bloques 2 y 3, cada uno con su pie
+\begin{frame}{Valor de la oportunidad de inversión}
+  \vspace{1mm}
+  {\centering
+  {\fontsize{8}{11}\selectfont
+   \renewcommand{\arraystretch}{1.08}%
+   \setlength{\tabcolsep}{4pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l ccccccccc}
+     \cabTablas{$\lambda$}
+     0.00 & \textbf{0.45} & \textbf{0.40} & \textbf{0.34} & \textbf{0.27} &
+     \cellcolor{celeste}\textbf{0.23} & \textbf{0.16} & \textbf{0.11} &
+     \textbf{0.08} & \textbf{0.04} \\ \hline
+     0.05 & 0.33 & 0.29 & 0.24 & 0.23 & 0.19 & 0.13 & 0.10 & 0.07 & 0.04 \\ \hline
+     0.10 & 0.27 & 0.23 & 0.19 & 0.20 & 0.16 & 0.12 & 0.10 & 0.07 & 0.04 \\ \hline
+     0.25 & 0.19 & 0.16 & 0.12 & 0.15 & 0.12 & 0.09 & 0.09 & 0.06 & 0.04 \\
+   \end{tabular}}\par}
+  \pietabla{Bloque 2: probabilidad anual $\lambda$ de que $V$ salte a cero
+    ($\sigma_v^2 = \sigma_f^2 = 0.04$, $\delta_f = 0.10$ fijos).}
+  \vspace{1.5mm}
+  {\centering
+  {\fontsize{8}{11}\selectfont
+   \renewcommand{\arraystretch}{1.08}%
+   \setlength{\tabcolsep}{4pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l ccccccccc}
+     \cabTablas{$\delta_f$}
+     0.01 & 0.30 & 0.23 & 0.14 & 0.18 & 0.13 & 0.07 & 0.08 & 0.06 & 0.03 \\ \hline
+     0.05 & 0.37 & 0.31 & 0.23 & 0.22 & 0.17 & 0.10 & 0.09 & 0.06 & 0.03 \\ \hline
+     0.10 & \textbf{0.45} & \textbf{0.40} & \textbf{0.34} & \textbf{0.27} &
+     \cellcolor{celeste}\textbf{0.23} & \textbf{0.16} & \textbf{0.11} &
+     \textbf{0.08} & \textbf{0.04} \\ \hline
+     0.25 & 0.60 & 0.58 & 0.56 & 0.42 & 0.39 & 0.36 & 0.18 & 0.15 & 0.10 \\
+   \end{tabular}}\par}
+  \pietabla{Bloque 3: $\delta_f$ ($\sigma_v^2 = \sigma_f^2 = 0.04$,
+    $\lambda = 0$ fijos).}
+\end{frame}
+
+% Tabla II — bloque 1 (varianza)
+\begin{frame}{Nivel de $V/F$ al que conviene invertir}
+  \vspace{1mm}
+  {\centering
+  {\fontsize{8}{11}\selectfont
+   \renewcommand{\arraystretch}{1.25}%
+   \setlength{\tabcolsep}{4pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l ccccccccc}
+     \cabTablas{$\sigma_v^2,\,\sigma_f^2$}
+     0.01 & 2.50 & 2.35 & 2.18 & 1.47 & 1.37 & 1.25 & 1.09 & 1.06 & 1.03 \\ \hline
+     0.02 & 2.91 & 2.64 & 2.35 & 1.72 & 1.56 & 1.37 & 1.18 & 1.12 & 1.06 \\ \hline
+     0.04 & \textbf{3.65} & \textbf{3.17} & \textbf{2.64} & \textbf{2.13} &
+     \cellcolor{celeste}\textbf{1.86} & \textbf{1.56} & \textbf{1.34} &
+     \textbf{1.24} & \textbf{1.12} \\ \hline
+     0.10 & 5.65 & 4.56 & 3.41 & 3.19 & 2.62 & 2.00 & 1.77 & 1.54 & 1.29 \\ \hline
+     0.20 & 8.77 & 6.70 & 4.56 & 4.79 & 3.73 & 2.62 & 2.44 & 2.00 & 1.54 \\ \hline
+     0.30 & 11.83 & 8.77 & 5.65 & 6.34 & 4.79 & 3.19 & 3.07 & 2.44 & 1.77 \\
+   \end{tabular}}\par}
+  \pietabla{Valor de los beneficios relativo al costo de inversión ($V/F$)
+    al que la inversión es óptima ($C^*$), calculado con las ecuaciones (4)
+    y (12). Bloque 1: varianza ($\lambda = 0$, $\delta_f = 0.10$ fijos).}
+  \begin{cajatexto}
+    Con parámetros razonables es óptimo esperar hasta que el valor del
+    proyecto \textbf{duplique} el costo de inversión.
+  \end{cajatexto}
+\end{frame}
+
+% Tabla II — bloques 2 y 3, cada uno con su pie
+\begin{frame}{Nivel de $V/F$ al que conviene invertir}
+  \vspace{1mm}
+  {\centering
+  {\fontsize{8}{11}\selectfont
+   \renewcommand{\arraystretch}{1.08}%
+   \setlength{\tabcolsep}{4pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l ccccccccc}
+     \cabTablas{$\lambda$}
+     0.00 & \textbf{3.65} & \textbf{3.17} & \textbf{2.64} & \textbf{2.13} &
+     \cellcolor{celeste}\textbf{1.86} & \textbf{1.56} & \textbf{1.34} &
+     \textbf{1.24} & \textbf{1.12} \\ \hline
+     0.05 & 2.50 & 2.23 & 1.92 & 1.86 & 1.67 & 1.44 & 1.32 & 1.23 & 1.12 \\ \hline
+     0.10 & 2.10 & 1.90 & 1.67 & 1.72 & 1.56 & 1.37 & 1.30 & 1.22 & 1.12 \\ \hline
+     0.25 & 1.67 & 1.54 & 1.40 & 1.51 & 1.40 & 1.27 & 1.27 & 1.19 & 1.11 \\
+   \end{tabular}}\par}
+  \pietabla{Bloque 2: probabilidad anual $\lambda$ de que $V$ salte a cero
+    ($\sigma_v^2 = \sigma_f^2 = 0.04$, $\delta_f = 0.10$ fijos).}
+  \vspace{1.5mm}
+  {\centering
+  {\fontsize{8}{11}\selectfont
+   \renewcommand{\arraystretch}{1.08}%
+   \setlength{\tabcolsep}{4pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l ccccccccc}
+     \cabTablas{$\delta_f$}
+     0.01 & 2.31 & 1.89 & 1.46 & 1.64 & 1.43 & 1.22 & 1.25 & 1.17 & 1.08 \\ \hline
+     0.05 & 2.85 & 2.38 & 1.86 & 1.83 & 1.58 & 1.32 & 1.28 & 1.19 & 1.10 \\ \hline
+     0.10 & \textbf{3.65} & \textbf{3.17} & \textbf{2.64} & \textbf{2.13} &
+     \cellcolor{celeste}\textbf{1.86} & \textbf{1.56} & \textbf{1.34} &
+     \textbf{1.24} & \textbf{1.12} \\ \hline
+     0.25 & 6.42 & 5.96 & 5.49 & 3.35 & 3.09 & 2.81 & 1.62 & 1.49 & 1.33 \\
+   \end{tabular}}\par}
+  \pietabla{Bloque 3: $\delta_f$ ($\sigma_v^2 = \sigma_f^2 = 0.04$,
+    $\lambda = 0$ fijos).}
+\end{frame}
+
+% (guion §3 "qué señalar" + §4 — síntesis de patrones)
+\begin{frame}{Estáticas comparativas de las Tablas I y II}
+  \begin{itemize}
+    \item \az{$\sigma^2$} $\uparrow$\;: valor de la opción $\uparrow$,
+          \rj{$C^*$} $\uparrow$.
+    \item \az{$\delta_f$} $\uparrow$\;: valor $\uparrow$, \rj{$C^*$}
+          $\uparrow$ --- crece el ahorro por diferir el desembolso.
+    \item \rj{$\delta_v$} $\uparrow$\;: valor $\downarrow$, \rj{$C^*$}
+          $\downarrow$ --- el efecto más fuerte; para
+          \rj{$\delta_v \to 0$}, $X \to V$ y $C^* \to \infty$.
+    \item \az{$\rho_{vf}$} $\uparrow$\;: valor $\downarrow$, \rj{$C^*$}
+          $\downarrow$ --- se reduce la varianza del ratio.
+    \item \az{$\lambda$} $\uparrow$\;: valor $\downarrow$, \rj{$C^*$}
+          $\downarrow$ --- equivale a descontar a \az{$\mu + \lambda$}.
+  \end{itemize}
+\end{frame}
+
+% Tabla III — OPCIONAL: sacar si la parte queda larga (guion §5)
+\begin{frame}{El peso de la incertidumbre en el valor}
+  \vspace{2mm}
+  {\centering
+  {\fontsize{8.5}{11.5}\selectfont
+   \renewcommand{\arraystretch}{1.3}%
+   \setlength{\tabcolsep}{8pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l cccc}
+     \rowcolor{gristitulo}
+     \multicolumn{1}{l}{$\sigma^2$} & $0.02$ & $0.04$ & $0.10$ & $0.30$ \\
+     \rowcolor{gristitulo}
+     \multicolumn{1}{l}{$\delta_v$} & & & & \\
+     0.02 & 5.3\%  & 9.4\%  & 17.2\% & 28.4\% \\ \hline
+     0.04 & 12.5\% & 20.1\% & 32.6\% & 47.1\% \\ \hline
+     0.06 & 25.6\% & 36.4\% & 50.8\% & 64.6\% \\ \hline
+     0.08 & 51.4\% & 61.9\% & 73.0\% & 82.1\% \\ \hline
+     0.10 & 100\%  & 100\%  & 100\%  & 100\%  \\
+   \end{tabular}}\par}
+  \pietabla{Porcentaje del valor de la opción atribuible a la incertidumbre,
+    comparando la ecuación (4) con la (13) determinística ($V = F = 1$,
+    $\delta_f = 0.10$).}
+  \vspace{2.5mm}
+  El cálculo mantiene fijos los retornos requeridos al variar $\sigma^2$:
+  válido solo si el riesgo adicional es \concepto{no sistemático}.
+\end{frame}
+
+% (Sección V del paper — guion §1 y §2)
+\begin{frame}{El monopolista: tecnología, demanda y shock}
+  El valor del proyecto se construye desde una firma explícita:
+  \begin{ecmed}
+    \rj{Q_t} = \az{K^{1-\beta} L_t^{\beta}}, \qquad
+    \rj{P_t} = \az{\theta_t\, Q_t^{-1/\eta}}, \qquad
+    \rj{\frac{d\theta}{\theta}} = \az{\alpha_\theta\,dt + \sigma_\theta\,dz_\theta}
+  \end{ecmed}
+  Capital rígido (la inversión irreversible), trabajo flexible; toda la
+  incertidumbre entra por el desplazador de demanda \az{$\theta_t$}.
+  \begin{ecmed}
+    \rj{\pi_t^{*}} = \az{B\,\theta_t^{\gamma}}, \qquad
+    \az{\gamma = \bigl[1 - \beta(1 - 1/\eta)\bigr]^{-1} > 1}
+  \end{ecmed}
+  El beneficio maximizado es convexo en el shock: con \az{$\beta = 2/3$} y
+  \az{$\eta = 2$}, \az{$\gamma = 1.5$}.
+\end{frame}
+
+% (guion §3 — el momento estrella: delta_v derivado)
+\begin{frame}{El monopolista: $V$ y $\delta_v$ endógenos}
+  Valor del proyecto instalado y retornos:
+  \begin{ecmed}
+    \rj{V(\theta_0)} = \az{\frac{B\,\theta_0^{\gamma}}{\bar{\alpha}_v - \alpha_v}},
+    \qquad
+    \az{\alpha_v = \gamma\alpha_\theta + \tfrac{1}{2}\gamma(\gamma-1)\sigma_\theta^2},
+    \qquad
+    \az{\bar{\alpha}_v = r + \phi\,\rho_{\theta m}\,\gamma\,\sigma_\theta}
+  \end{ecmed}
+  \cajaec{\rj{\delta_v} = \az{\bar{\alpha}_v - \alpha_v}
+    = \az{B\,\theta_0^{\gamma} / V_0}}
+  El payout del proyecto instalado deja de ser un supuesto: queda derivado
+  de la tecnología y la demanda.
+\end{frame}
+
+% Tabla IV (guion §4)
+\begin{frame}{Valores de la opción y reglas de inversión}
+  \vspace{1mm}
+  {\centering
+  {\fontsize{8}{11}\selectfont
+   \renewcommand{\arraystretch}{1.25}%
+   \setlength{\tabcolsep}{4pt}%
+   \arrayrulecolor{grispie}%
+   \begin{tabular}{>{\bfseries\color{navy}}l ccccccccc}
+     \rowcolor{gristitulo}
+     \multicolumn{1}{l}{$\alpha_\theta$}
+     & \multicolumn{3}{c}{$-0.03$}
+     & \multicolumn{3}{c}{$0.00$}
+     & \multicolumn{3}{c}{$0.01$} \\
+     \rowcolor{gristitulo}
+     \multicolumn{1}{l}{$\rho_{\theta m}$}
+     & $0.0$ & $0.2$ & $0.5$
+     & $0.0$ & $0.2$ & $0.5$
+     & $0.0$ & $0.2$ & $0.5$ \\
+     \rowcolor{gristitulo}
+     \multicolumn{1}{l}{$\sigma_\theta^2$} & & & & & & & & & \\
+     0.01 & 0.074 & 0.060 & 0.046 & 0.189 & 0.131 & 0.084 & 0.290 & 0.189 & 0.111 \\
+          & (1.22) & (1.18) & (1.13) & (1.68) & (1.43) & (1.26) & (2.25) & (1.68) & (1.35) \\ \hline
+     0.04 & 0.223 & 0.166 & 0.118 & 0.413 & 0.266 & 0.166 & 0.549 & 0.326 & 0.191 \\
+          & (1.85) & (1.58) & (1.38) & (3.28) & (2.09) & (1.58) & (5.28) & (2.50) & (1.69) \\ \hline
+     0.10 & 0.440 & 0.304 & 0.206 & 0.755 & 0.430 & 0.259 & * & 0.497 & 0.284 \\
+          & (3.58) & (2.35) & (1.76) & (13.7) & (3.47) & (2.05) & * & (4.36) & (2.20) \\ \hline
+     0.20 & 0.765 & 0.474 & 0.305 & * & 0.632 & 0.363 & * & 0.715 & 0.387 \\
+          & (14.6) & (4.02) & (2.35) & * & (7.37) & (2.80) & * & (11.0) & (3.02) \\
+   \end{tabular}}\par}
+  \pietabla{Valor de la opción; entre paréntesis, nivel óptimo de inversión.
+    Parámetros: $\eta = 2$; $r = 0.05$; $\beta = 2/3$; $\phi = 0.50$;
+    $V = 1$; $F = 1$ no estocástico. *Para esos valores $\delta_v < 0$ y el
+    valor de la opción no está definido.}
+\end{frame}
+
+% (guion §5 y §6 — asteriscos y contraejemplo)
+\begin{frame}{Los asteriscos de la Tabla IV}
+  Al variar \az{$\sigma_\theta$} se mueven a la vez \az{$\sigma_v$},
+  \az{$\alpha_v$} (Jensen) y \az{$\bar{\alpha}_v$} (CAPM). En la celda
+  $\sigma_\theta^2 = 0.20$, $\alpha_\theta = 0$, $\rho_{\theta m} = 0$:
+  \begin{ec}
+    \rj{\delta_v} = \underbrace{\az{0.05}}_{r}
+      + \underbrace{\az{0}}_{\text{CAPM}}
+      - \underbrace{\az{0}}_{\gamma\alpha_\theta}
+      - \underbrace{\az{0.075}}_{\frac{1}{2}\gamma(\gamma-1)\sigma_\theta^2}
+      = \rj{-0.025} < 0
+  \end{ec}
+  El término de Jensen supera al retorno requerido: esperar siempre suma y
+  la inversión nunca se concreta.
+  \par\vspace{2mm}
+  Con $\eta = 1.0001$, $\alpha_\theta = -0.03$ y $\rho_{\theta m} = 0.95$:
+  subir \az{$\sigma_\theta^2$} de $0.0025$ a $0.0050$ \emph{reduce} la
+  opción de \rj{$0.0293$} a \rj{$0.0286$}.
+\end{frame}
+
+% (guion §6 — autocrítica del paper)
+\begin{frame}{Los límites del supuesto browniano}
+  La demanda es una variable real: bajo MBG su incertidumbre crece
+  linealmente con el horizonte, sin límite.
+  \par\vspace{3mm}
+  Un proceso con \concepto{reversión a la media} sería más realista, pero
+  no admite solución analítica.
+  \par\vspace{3mm}
+  Un payout \rj{$\delta_v$} creciente en \az{$V$} acotaría el valor y
+  devolvería un \rj{$C^*$} finito.
+  \begin{cajatexto}
+    El MBG es un buen supuesto para valores presentes; aplicado a
+    fundamentos reales puede producir resultados implausibles.
+  \end{cajatexto}
+\end{frame}
+
+% (Sección VI del paper)
+\begin{frame}{Conclusiones}
+  \begin{cajatexto}
+    ``El valor perdido por adoptar subóptimamente un proyecto de VAN cero
+    está fácilmente entre el \textbf{10 y el 20 por ciento} (o más) del
+    valor del proyecto.''
+  \end{cajatexto}
+  \vspace{2mm}
+  Limitaciones señaladas por los autores:
+  \begin{enumerate}
+    \item \concepto{MBG}: plausible para valores presentes; con payouts y
+          varianzas dependientes de los precios, las opciones serían
+          menores.
+    \item \concepto{Inversión indivisible}: si se pudiera invertir
+          gradualmente, el problema del timing perdería importancia.
+    \item \concepto{Irreversibilidad total}: se ignora el desarme posterior
+          del proyecto; la reversibilidad entra implícitamente vía
+          depreciación.
+  \end{enumerate}
+\end{frame}

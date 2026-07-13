@@ -1,0 +1,175 @@
+% ============================================================
+% PARTE FELIPE — presentación del paper y supuestos a fondo
+% (el CAPM se explica acá, no en la parte de tasa de descuento)
+% Nota: los títulos nunca llevan "Sección N"; las referencias a
+% secciones del paper van solo en comentarios.
+% ============================================================
+\divisoria{Felipe Velarde}% TEMPORAL: borrar en la versión final
+
+% ---------- Sumario ----------
+% (provisional: puntos 3 y 4 se ajustan cuando lleguen las partes de los demás)
+\begin{frame}{Sumario}
+  \vspace{14mm}
+  \begin{enumerate}
+    \item Objetivo y el error del VAN tradicional
+    \item El problema de inversión y los supuestos del modelo
+    \item La regla óptima y el valor de la opción de esperar
+    \item Estáticas comparativas y resultados numéricos
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Objetivo del paper}
+  \vspace{5mm}
+  El objetivo es estudiar el \concepto{timing óptimo} de la inversión en un
+  proyecto irreversible, cuando los beneficios esperados y los costos de
+  inversión siguen procesos estocásticos en tiempo continuo.
+  \par\vspace{6mm}
+  A diferencia de los modelos previos, deriva una \resultado{regla de
+  inversión óptima} y una fórmula explícita para valuar la opción de esperar,
+  incorporando formalmente la \concepto{aversión al riesgo} de los
+  inversores.
+  \par\vspace{6mm}
+  Y demuestra, mediante simulaciones numéricas, que el valor de esa opción es
+  significativo: aplicar la regla tradicional del ``VAN $=0$'' genera
+  \resultado{pérdidas sustanciales}.
+\end{frame}
+
+\begin{frame}{Motivación: el error del VAN tradicional}
+  \begin{itemize}
+    \item Construir es \concepto{irreversible} --- el capital queda hundido,
+          sin uso alternativo ---, mientras que diferir la inversión es
+          \emph{reversible}. Esa asimetría es el corazón del problema.
+    \item Invertir hoy no compite solo con ``no invertir'': compite con
+          \emph{todas} las alternativas futuras, mutuamente excluyentes, de
+          invertir más adelante.
+  \end{itemize}
+  \begin{cajatexto}
+    Invertir apenas ``VAN $>0$'' (en \az{$V = F$}) solo es óptimo en dos
+    casos degenerados: si \az{$\sigma_v^2 = \sigma_f^2 = 0$} o si
+    \rj{$\alpha_v \to -\infty$}. En cualquier otro caso hace falta un
+    \textbf{margen positivo}.
+  \end{cajatexto}
+\end{frame}
+
+\begin{frame}{Qué aporta el paper}
+  \begin{itemize}
+    \item Incorpora la \concepto{aversión al riesgo} de forma manejable, vía
+          inversores bien diversificados y el CAPM.
+    \item Entrega una \resultado{regla de inversión óptima} y una fórmula
+          explícita para el valor de la opción de esperar.
+    \item Cuantifica el efecto: la opción de esperar vale, y seguir la regla
+          tradicional ``VAN $= 0$'' genera pérdidas sustanciales.
+  \end{itemize}
+\end{frame}
+
+% (Sección II del paper) — V y F, con el supuesto de MBG integrado
+\begin{frame}{El problema de inversión}
+  \begin{itemize}
+    \item En cualquier momento $t$, la firma puede pagar un costo \az{$F_t$}
+          para instalar un proyecto cuyo valor presente de flujos netos
+          esperados es \rj{$V_t$}.
+    \item Ambos son estocásticos y siguen \concepto{movimientos brownianos
+          geométricos}, con $dz_v$, $dz_f$ procesos de Wiener:
+  \end{itemize}
+  \begin{ec}
+    \rj{\frac{dV}{V}} = \az{\alpha_v\,dt + \sigma_v\,dz_v}
+    \qquad\qquad
+    \rj{\frac{dF}{F}} = \az{\alpha_f\,dt + \sigma_f\,dz_f}
+  \end{ec}
+  \begin{itemize}
+    \item El MBG permite derivar las ecuaciones de valuación y hace del cero
+          una \concepto{barrera absorbente} natural.
+  \end{itemize}
+\end{frame}
+
+% Caso especial: costo fijo (movido a continuación de V y F)
+\begin{frame}{Caso especial: costo de inversión fijo}
+  \begin{itemize}
+    \item Si el costo \az{$F$} es constante, su volatilidad y su deriva se
+          anulan:
+  \end{itemize}
+  \begin{ecmed}
+    \az{\sigma_f = 0}, \qquad \az{\alpha_f = 0}
+  \end{ecmed}
+  \begin{itemize}
+    \item Lejos de perder la solución analítica, el problema de dos variables
+          estocásticas colapsa a una sola (\rj{$V$}).
+    \item Es el caso clásico de la \concepto{opción americana perpetua},
+          resuelto con fórmula analítica cerrada.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Un mismo marco, varios problemas}
+  \begin{itemize}
+    \item \concepto{Monopolista}: tras instalar la capacidad queda protegido
+          de la competencia; los flujos del proyecto están resguardados.
+    \item \concepto{Industria competitiva}: rentas temporales --- la entrada
+          rezagada de competidores empuja los beneficios hacia los costos
+          (deriva post-inversión menor o negativa).
+    \item \concepto{Intercambio de activos}: invertir equivale a cambiar un
+          activo riesgoso (\az{$F$}) por otro (\rj{$V$}).
+    \item \concepto{Desguace óptimo}: reinterpretando \az{$F$} como el valor
+          en operación y \rj{$V$} como el valor de descarte.
+  \end{itemize}
+\end{frame}
+
+% (Sección III del paper) — tabla sin MBG (→ slide V y F) ni Poisson (→ slide vencer)
+\begin{frame}{Supuestos del modelo}
+  Los demás supuestos que sostienen la solución analítica cerrada:
+  \par\vspace{2mm}
+  {\fontsize{9}{12}\selectfont
+   \renewcommand{\arraystretch}{1.5}%
+   \setlength{\tabcolsep}{4.5pt}%
+   \arrayrulecolor{grispie}%
+   \noindent\begin{tabular}{>{\raggedright\arraybackslash\bfseries\color{navy}}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}}
+     \rowcolor{gristitulo}
+     \multicolumn{1}{l}{\textcolor{navy}{\textbf{Supuesto}}} &
+     \multicolumn{1}{l}{\textcolor{navy}{\textbf{¿En qué consiste?}}} &
+     \multicolumn{1}{l}{\textcolor{navy}{\textbf{¿Por qué es necesario?}}} \\
+     Vida infinita ($T=\infty$) &
+     La oportunidad no vence en ninguna fecha del calendario. &
+     Sin tiempo calendario, el umbral $C^*$ es constante: solución analítica. \\ \hline
+     Inversores diversificados &
+     Opciones y proyectos pertenecen a portafolios bien diversificados. &
+     Aversión al riesgo solo vía riesgo sistemático (CAPM). \\ \hline
+     Deriva acotada ($\alpha_v<\mu$) &
+     $V$ crece en esperanza menos que la tasa de descuento requerida. &
+     Evita que la opción valga infinito (esperar para siempre). \\
+   \end{tabular}}
+\end{frame}
+
+% Dividendo — fórmula mu/alfa reacomodada (δ = μ − α_v  ⟹  α_v < μ)
+\begin{frame}{¿Por qué $\alpha_v < \mu$? La analogía del dividendo}
+  \begin{itemize}
+    \item Mientras la firma no invierte, posterga los flujos de caja que el
+          proyecto ya estaría repartiendo. Ese costo de oportunidad es el
+          \concepto{rendimiento por dividendos} \az{$\delta$}.
+  \end{itemize}
+  \cajaec{\az{\delta} = \az{\mu} - \rj{\alpha_v}
+          \;\;\Longrightarrow\;\;
+          \rj{\alpha_v} = \az{\mu - \delta} < \az{\mu}}
+  \begin{itemize}
+    \item El retorno total de equilibrio es \az{$\mu$}; como parte llega en
+          forma de dividendo (\az{$\delta > 0$}), el valor latente se aprecia
+          más lento: \rj{$\alpha_v < \mu$}.
+    \item Si fuese \az{$\alpha_v \geq \mu$}, esperar siempre convendría: el
+          valor de la opción \resultado{divergiría a infinito} y la firma
+          jamás invertiría.
+  \end{itemize}
+\end{frame}
+
+% Vencimiento — incorpora el supuesto de salto de Poisson
+\begin{frame}{¿Y si la oportunidad puede vencer?}
+  \begin{itemize}
+    \item Con fecha de vencimiento fija ($T<\infty$) \resultado{no hay
+          solución analítica}: cerca del límite, la frontera óptima de
+          ejercicio cambia con el calendario y se necesitan métodos numéricos
+          (árboles binomiales, diferencias finitas).
+    \item Con \concepto{vencimiento incierto} sí: se modela con un
+          \concepto{salto de Poisson}, probabilidad constante \az{$\lambda\,dt$}
+          de que \rj{$V$} caiga a cero (obsolescencia, entrada de un rival).
+    \item La estructura analítica queda idéntica al caso base; el riesgo de
+          salto solo penaliza la tasa de descuento:
+  \end{itemize}
+  \cajaec{\az{\mu} \;\longrightarrow\; \rj{\mu + \lambda}}
+\end{frame}
