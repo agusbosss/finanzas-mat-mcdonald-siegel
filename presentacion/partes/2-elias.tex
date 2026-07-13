@@ -105,20 +105,35 @@
   tanto \rj{$C^*>1$}.
 \end{frame}
 
-% E6 — apéndice: la EDP de Feynman-Kac
+% E6 — apéndice: la EDP de Feynman-Kac + condiciones de contorno
 \begin{frame}{Desarrollo matemático (apéndice)}
-  En la barrera el payoff es \rj{$V$}$-$\az{$F$}$=$\az{$F$}$($\rj{$C^*$}$-1)$,
-  y el valor \az{$L(V,F)=E_0\{F_{t'}\,e^{-\mu t'}\}$} satisface, por
-  \concepto{Feynman--Kac}:
+  El valor \az{$L(V,F)=E_0\{F_{t'}\,e^{-\mu t'}\}$}, con \rj{$t'$} el primer
+  instante en que \rj{$V$}$/$\az{$F$} toca \rj{$C^*$}, satisface por
+  \concepto{Feynman--Kac} la EDP (A.2):
   \begin{ecmed}
     \az{\mu L = \tfrac12\!\left[L_{vv}V^2\sigma_v^2 + L_{ff}F^2\sigma_f^2
       + 2 L_{vf}VF\sigma_{vf}\right] + L_v \alpha_v V + L_f \alpha_f F}
   \end{ecmed}
-  Con la forma \az{$L = k\,F\,C^{\,b}$} y las condiciones de contorno se llega a
-  \begin{ecmed}
-    \az{\mu = \tfrac12\, b\,(b-1)\,\sigma^2 + b\,\alpha_v + (1-b)\,\alpha_f},
-    \qquad \rj{b = \varepsilon}
-  \end{ecmed}
+  Condiciones de contorno (se decide invertir en $[$\rj{$C^*$}$,\infty)$):
+  \begin{itemize}
+    \item[(i)] \az{$L=F$} en la barrera \rj{$V$}$/$\az{$F$}$=$\rj{$C^*$}: aquí
+          \rj{$t'=0$} y se invierte.
+    \item[(ii)] \az{$L\to0$} cuando \rj{$V$}$/$\az{$F$}$\to0$: \rj{$t'\to\infty$},
+          nunca se invierte.
+  \end{itemize}
+\end{frame}
+
+% E6b — apéndice: forma funcional → ecuación característica
+\begin{frame}{Apéndice: la ecuación característica}
+  Se propone la forma funcional \az{$L = k\,F^{a}\,C^{b}$}, con
+  \az{$C=$}\rj{$V$}$/$\az{$F$}. La condición (i) fija \az{$a=1$} y
+  \az{$k=(C^*)^{-b}$}; sustituyendo en (A.2) se obtiene la ecuación
+  característica (A.4):
+  \begin{ec}
+    \az{\mu = \tfrac12\, b\,(b-1)\,\sigma^2 + b\,\alpha_v + (1-b)\,\alpha_f}
+  \end{ec}
+  La condición (ii) exige \az{$b>0$}: la raíz positiva es \rj{$b=\varepsilon$},
+  el exponente que aparece en \rj{$X$}.
 \end{frame}
 
 % E7 — C* óptimo
