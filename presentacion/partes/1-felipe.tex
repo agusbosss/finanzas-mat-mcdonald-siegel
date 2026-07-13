@@ -140,25 +140,27 @@
   \end{cajatexto}
 \end{frame}
 
-% Dividendo — caja original (δ = μ − α_v ⟹ α_v = μ − δ < μ) + línea "por lo tanto α_v < μ"
-\begin{frame}{¿Por qué $\alpha_v < \mu$? La analogía del dividendo}
+% Dividendo — δ = α̂v − αv ⟹ αv < α̂v
+% (μ → α̂v por decisión del grupo: μ queda reservado para la tasa de la opción)
+\begin{frame}{¿Por qué $\alpha_v < \hat{\alpha}_v$? La analogía del dividendo}
   \begin{itemize}
     \item Mientras la firma no invierte, posterga los flujos de caja que el
           proyecto ya estaría repartiendo. Ese costo de oportunidad es el
           \concepto{rendimiento por dividendos} \az{$\delta$}.
   \end{itemize}
-  \cajaec{\az{\delta} = \az{\mu} - \rj{\alpha_v}
+  \cajaec{\az{\delta} = \az{\hat{\alpha}_v} - \rj{\alpha_v}
           \;\;\Longrightarrow\;\;
-          \rj{\alpha_v} = \az{\mu - \delta} < \az{\mu}}
+          \rj{\alpha_v} = \az{\hat{\alpha}_v - \delta} < \az{\hat{\alpha}_v}}
   \vspace{-2mm}
   \begin{ec}
-    \text{Por lo tanto:}\quad \rj{\alpha_v} < \az{\mu}
+    \text{Por lo tanto:}\quad \rj{\alpha_v} < \az{\hat{\alpha}_v}
   \end{ec}
   \vspace{-3mm}
   \begin{itemize}
-    \item \az{$\mu$} es el retorno total de equilibrio; como parte llega como
-          dividendo (\az{$\delta > 0$}), el valor latente se aprecia más lento.
-    \item Si fuese \az{$\alpha_v \geq \mu$}, la opción \resultado{divergiría a
-          infinito} y la firma jamás invertiría.
+    \item \az{$\hat{\alpha}_v$} es el retorno de equilibrio exigido a \rj{$V$};
+          como parte llega como dividendo (\az{$\delta > 0$}), el valor latente
+          se aprecia más lento.
+    \item Si fuese \az{$\alpha_v \geq \hat{\alpha}_v$}, la opción
+          \resultado{divergiría a infinito} y la firma jamás invertiría.
   \end{itemize}
 \end{frame}

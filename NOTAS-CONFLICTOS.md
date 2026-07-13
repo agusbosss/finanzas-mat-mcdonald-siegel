@@ -63,18 +63,7 @@ del calendario y no hay fórmula cerrada: se necesitan métodos numéricos.
 
 ---
 
-## 2. Falta que Mariano confirme
-
-**X\***: en el borrador de Mariano, X* se usaba a la vez para el valor de la
-opción (slide "Saltos en Vₜ") y para la tasa de descuento requerida (slide
-"Impacto de la obsolescencia"). Al pasarlo a las láminas quedó X* solo para el
-valor de la opción, y la tasa se escribió como "r + ε(α̂v − r)", sin símbolo.
-Falta que Mariano confirme si está de acuerdo o si prefiere ponerle un nombre a
-esa tasa.
-
----
-
-## 3. Pendiente final
+## 2. Pendiente final
 
 - Borrar las 4 diapositivas divisorias (nombres de los integrantes) — se hace al
   final de todo.
