@@ -67,7 +67,7 @@
     \item Parte del rendimiento exigido de \rj{$V$} a la que se renuncia al
           percibir solo aumentos de precio.
     \item Si \az{$\delta_v$} sube: la inversión óptima se adelanta (menor
-          umbral \rj{$V$}$/$\az{$F$}) y la opción \resultado{vale menos}.
+          umbral \rj{$V$}$/$\az{$F$}) y la opción \emph{vale menos}.
     \item Más riesgo sistemático de \rj{$V$} (con \az{$\alpha_v$} constante)
           eleva \az{$\delta_v$}.
   \end{itemize}
@@ -77,7 +77,7 @@
     \item Rendimiento de \az{$F$} al que se renuncia al obtener solo aumentos
           de precio (costo aplazado).
     \item Si \az{$\delta_f$} sube: mayor beneficio por esperar, la opción
-          \resultado{vale más}. Más riesgo sistemático de \az{$F$} eleva
+          \emph{vale más}. Más riesgo sistemático de \az{$F$} eleva
           \az{$\delta_f$}.
   \end{itemize}
 \end{frame}
@@ -105,7 +105,7 @@
 
 % M6 — desguace óptimo: reinterpretación de V y F [NUEVA]
 \begin{frame}{Desguace óptimo del proyecto}
-  El modelo es \concepto{versátil}: la misma lógica que decide cuándo adquirir
+  El modelo es \emph{versátil}: la misma lógica que decide cuándo adquirir
   un proyecto decide cuándo abandonarlo. Basta reinterpretar las variables:
   \begin{itemize}
     \item \rj{$V$}: valor de desguace aleatorio (precio de venta).
@@ -118,7 +118,7 @@
       = (1-c^*)\,V_0\!\left(\frac{F_0/V_0}{c^*}\right)^{\!1-\varepsilon}}
   \end{ec}
   Regla óptima: desmantelar cuando \az{$F$}$/$\rj{$V$} desciende al umbral
-  \rj{$c^*$}. Con vida finita harían falta \resultado{métodos numéricos}.
+  \rj{$c^*$}. Con vida finita harían falta métodos numéricos.
 \end{frame}
 
 % M7 — saltos de Poisson en Vt (riesgo de ruina) [NUEVA]
@@ -132,7 +132,7 @@
   \end{ecmed}
   con \rj{$dq$} el salto de Poisson (muerte súbita) de intensidad
   \az{$\lambda$}. Si el salto ocurre, el proceso se detiene: es una opción de
-  \concepto{vencimiento incierto}. El riesgo se absorbe sumando \az{$\lambda$}
+  \emph{vencimiento incierto}. El riesgo se absorbe sumando \az{$\lambda$}
   a la tasa de descuento (\az{$\mu \to \mu+\lambda$}):
   \begin{ecmed}
     \rj{X^*} = \az{\max_{\{C_t'\}} E_0\!\left(e^{-(\mu+\lambda)t'}\,
@@ -151,7 +151,7 @@
   \end{ecmed}
   (si \az{$F$} es estocástico, \az{$r$} se reemplaza por \az{$\delta_f$}).
   \begin{itemize}
-    \item Más \az{$\lambda$} \resultado{reduce el valor de la opción} y baja el
+    \item Más \az{$\lambda$} reduce el valor de la opción y baja el
           umbral \rj{$C^*$}.
     \item En opciones financieras puras (Merton, 1976) el riesgo de ruina
           \emph{aumenta} el valor; en opciones de inversión real lo

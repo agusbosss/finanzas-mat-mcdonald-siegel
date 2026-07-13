@@ -42,9 +42,9 @@
   proyecto irreversible, cuando los beneficios esperados y los costos de
   inversión siguen procesos estocásticos en tiempo continuo.
   \par\vspace{6mm}
-  A diferencia de los modelos previos, deriva una \resultado{regla de
+  A diferencia de los modelos previos, deriva una \emph{regla de
   inversión óptima} y una fórmula explícita para valuar la opción de esperar,
-  incorporando formalmente la \concepto{aversión al riesgo} de los
+  incorporando formalmente la aversión al riesgo de los
   inversores.
   \par\vspace{6mm}
   Y demuestra, mediante simulaciones numéricas, que el valor de esa opción es
@@ -64,13 +64,13 @@
   \begin{ec}
     \rj{\frac{dV}{V}} = \az{\alpha_v\,dt + \sigma_v\,dz_v}
     \qquad\qquad
-    \rj{\frac{dF}{F}} = \az{\alpha_f\,dt + \sigma_f\,dz_f}
+    \az{\frac{dF}{F} = \alpha_f\,dt + \sigma_f\,dz_f}
   \end{ec}
   \vspace{-3mm}
   \begin{itemize}
-    \item El MBG hace del cero una \concepto{barrera absorbente} natural.
+    \item El MBG hace del cero una \emph{barrera absorbente} natural.
     \item \concepto{Vida infinita} (\az{$T=\infty$}): umbral óptimo constante.
-    \item La inversión se hace \concepto{toda de una vez}, no por etapas.
+    \item La inversión se hace \emph{toda de una vez}, no por etapas.
   \end{itemize}
 \end{frame}
 
@@ -99,7 +99,7 @@
           solución analítica}: cerca del límite, la frontera óptima de
           ejercicio cambia con el calendario y se necesitan métodos numéricos
           (árboles binomiales, diferencias finitas).
-    \item Con \concepto{vencimiento incierto} sí: se modela con un
+    \item Con \emph{vencimiento incierto} sí: se modela con un
           \concepto{salto de Poisson}, probabilidad constante \az{$\lambda\,dt$}
           de que \rj{$V$} caiga a cero (obsolescencia, entrada de un rival).
     \item La estructura analítica queda idéntica al caso base; el riesgo de
@@ -110,14 +110,14 @@
 
 \begin{frame}{Un mismo marco, varios problemas}
   \begin{itemize}
-    \item \concepto{Monopolista}: tras instalar la capacidad queda protegido
+    \item \textbf{Monopolista}: tras instalar la capacidad queda protegido
           de la competencia; los flujos del proyecto están resguardados.
-    \item \concepto{Industria competitiva}: rentas temporales --- la entrada
+    \item \textbf{Industria competitiva}: rentas temporales --- la entrada
           rezagada de competidores empuja los beneficios hacia los costos
           (deriva post-inversión menor o negativa).
-    \item \concepto{Intercambio de activos}: invertir equivale a cambiar un
+    \item \textbf{Intercambio de activos}: invertir equivale a cambiar un
           activo riesgoso (\az{$F$}) por otro (\rj{$V$}).
-    \item \concepto{Desguace óptimo}: reinterpretando \az{$F$} como el valor
+    \item \textbf{Desguace óptimo}: reinterpretando \az{$F$} como el valor
           en operación y \rj{$V$} como el valor de descarte.
   \end{itemize}
 \end{frame}
@@ -130,9 +130,9 @@
     \item Opciones y proyectos pertenecen a \concepto{portafolios bien
           diversificados}: la aversión al riesgo entra solo a través del
           \concepto{riesgo sistemático}.
-    \item Ese supuesto habilita usar el \concepto{CAPM} para fijar la tasa de
-          descuento correcta de los flujos: la \resultado{tasa de rendimiento
-          de equilibrio} exigida a la inversión.
+    \item Ese supuesto habilita usar el CAPM para fijar la tasa de
+          descuento correcta de los flujos: la tasa de rendimiento
+          de equilibrio exigida a la inversión.
   \end{itemize}
   \begin{cajatexto}
     El CAPM es la pieza que permite obtener \az{$\mu$}, la tasa a la que se
