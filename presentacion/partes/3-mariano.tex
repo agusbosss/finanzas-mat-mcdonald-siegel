@@ -35,8 +35,8 @@
   de rendimiento esperada de equilibrio es
   \begin{ec}
     \rj{\mu} = \az{r + \varepsilon(\hat{\alpha}_v - r)
-      + (1-\varepsilon)(\hat{\alpha}_f - r)
-      = \varepsilon\hat{\alpha}_v + (1-\varepsilon)\hat{\alpha}_f}
+      + (1-\varepsilon)(\hat{\alpha}_f - r)}
+      = \az{\varepsilon\hat{\alpha}_v + (1-\varepsilon)\hat{\alpha}_f}
   \end{ec}
 \end{frame}
 
@@ -89,15 +89,15 @@
     \rj{\hat{X}} = \az{(\hat{C} - 1)\,F_0
       \left(\frac{V_0/F_0}{\hat{C}}\right)^{\!\delta_f/(\delta_f-\delta_v)}},
     \quad \az{\hat{C} = \delta_f/\delta_v}, \quad
-    \text{\small invertir si } \az{V_0\delta_v \geq F_0\delta_f}
+    \text{\small invertir si } \az{V_0\delta_v} \geq \az{F_0\delta_f}
   \end{ecmed}
   \vspace{-1mm}
-  {\small\noindent Válido solo si \az{$\delta_v < \delta_f$}.}
+  {\small\noindent Válido solo si $\az{\delta_v} < \az{\delta_f}$.}
   \par\vspace{1mm}
-  \concepto{Con incertidumbre} (\az{$\sigma^2 > 0$}): la regla incorpora un
+  \concepto{Con incertidumbre} ($\az{\sigma^2} > 0$): la regla incorpora un
   término extra \az{$h$}, el valor de esperar:
   \begin{ecmed}
-    \az{V_0\,\delta_v \geq F_0\,\delta_f + h(V_0, F_0)}, \qquad \az{h > 0}
+    \az{V_0\,\delta_v} \geq \az{F_0\,\delta_f + h(V_0, F_0)}, \qquad \az{h} > 0
   \end{ecmed}
   Ese término \az{$h$} permite \resultado{captar ganancias y evitar pérdidas}
   --- es lo que agrega la opción de esperar.
