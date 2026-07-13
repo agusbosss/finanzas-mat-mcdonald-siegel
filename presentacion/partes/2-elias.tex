@@ -53,14 +53,18 @@
 
 % E4 — modelo general + homogeneidad
 \begin{frame}{Modelo general: $F$ también estocástico}
-  Ahora \az{$F_t$} también es aleatorio y sigue un MBG. La caracterización
-  del umbral ya no es evidente, pero la regla sigue siendo de umbral sobre el
-  ratio \rj{$V$}$/$\az{$F$}.
+  La caracterización del umbral ya no es evidente, pero la regla sigue siendo
+  de umbral sobre el ratio \rj{$V$}$/$\az{$F$}.
   \par\vspace{3mm}
-  \concepto{Homogeneidad de grado cero}: con \rj{$V'=kV$} y \az{$F'=kF$} el
-  problema es formalmente idéntico, de modo que el umbral no depende de $k$
+  \concepto{Homogeneidad de grado cero}: con \rj{$V'=kV$} y \az{$F'=kF$},
+  \begin{ecmed}
+    \rj{\frac{dV'}{V'} = \alpha_v\,dt + \sigma_v\,dz_v}
+    \qquad
+    \az{\frac{dF'}{F'} = \alpha_f\,dt + \sigma_f\,dz_f}
+  \end{ecmed}
+  el problema es formalmente idéntico, de modo que el umbral no depende de $k$
   (es homogéneo de grado cero en \rj{$V$}, \az{$F$}) ni del calendario cuando
-  $T\to\infty$.
+  \mbox{$T\to\infty$}.
   \begin{cajatexto}
     Regla óptima: invertir cuando \rj{$V_t$}$/$\az{$F_t$} $\geq$ \rj{$C^*$}.
   \end{cajatexto}
