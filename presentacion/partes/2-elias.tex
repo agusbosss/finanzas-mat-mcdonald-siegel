@@ -73,18 +73,36 @@
 % E5 — la solución (X, epsilon)
 \begin{frame}{La solución del modelo general}
   El apéndice demuestra que la región de inversión es
-  $[$\rj{$C^*$}$,\infty)$. El valor de la oportunidad es
+  $[$\rj{$C^*$}$,\infty)$. Como el factor \rj{$C^*\!-1$} es constante, sale de
+  la esperanza:
+  \begin{ecmed}
+    \az{E_0\bigl\{ F_{t'}\,}\rj{[C^*\!-1]}\az{\,e^{-\mu t'} \bigr\}}
+      = \rj{[C^*\!-1]}\,\az{E_0\bigl\{ F_{t'}\,e^{-\mu t'} \bigr\}}
+  \end{ecmed}
+  y el valor de la oportunidad de inversión resulta
   \begin{ec}
     \rj{X} = \az{(C^* - 1)\,F_0
       \left(\frac{V_0/F_0}{C^*}\right)^{\!\varepsilon}}
   \end{ec}
-  \begin{ecmed}
+  El exponente \rj{$\varepsilon$} es la raíz positiva de la ecuación
+  característica del apéndice.
+\end{frame}
+
+% E5b — el exponente epsilon (separado de la solución para que entre)
+\begin{frame}{El exponente $\varepsilon$}
+  Depende de las derivas \az{$\alpha_v,\alpha_f$}, la varianza conjunta
+  \az{$\sigma^2$} y la tasa de descuento \az{$\mu$}:
+  \par\vspace{2mm}
+  \begin{ec}
     \az{\varepsilon = \sqrt{\left(\frac{\alpha_v-\alpha_f}{\sigma^2}
       - \frac12\right)^{\!2} + \frac{2(\mu-\alpha_f)}{\sigma^2}}
       + \left(\frac12 - \frac{\alpha_v-\alpha_f}{\sigma^2}\right)}
-  \end{ecmed}
-  con \az{$\sigma^2 = \sigma_v^2 + \sigma_f^2 - 2\rho_{vf}\sigma_v\sigma_f$}.
-  La condición \az{$\alpha_v<\mu$} garantiza \rj{$\varepsilon>1$}.
+  \end{ec}
+  con \az{$\sigma^2 = \sigma_v^2 + \sigma_f^2 - 2\rho_{vf}\sigma_v\sigma_f$} la
+  varianza del ratio \rj{$V$}$/$\az{$F$}.
+  \par\vspace{4mm}
+  La condición \az{$\alpha_v<\mu$} garantiza \rj{$\varepsilon>1$}, y por lo
+  tanto \rj{$C^*>1$}.
 \end{frame}
 
 % E6 — apéndice: la EDP de Feynman-Kac
