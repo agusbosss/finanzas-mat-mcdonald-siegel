@@ -13,7 +13,7 @@ entendimos el paper.
 
 ## Entrega principal
 
-- **[`Presentación McDonald-Siegel v6.pdf`](Presentación%20McDonald-Siegel%20v6.pdf)** —
+- **[`Presentación McDonald-Siegel - Grupo 2.pdf`](Presentación%20McDonald-Siegel%20-%20Grupo%202.pdf)** —
   la presentación completa, lista para leer o proyectar. Queda suelta en la raíz para
   acceso directo.
 - **Visualización interactiva** — pieza de cierre que ilustra el resultado del paper
@@ -29,6 +29,7 @@ entendimos el paper.
 | `visualizacion/` | La visualización interactiva de cierre (HTML autónomo, sin dependencias externas). |
 | `notas/` | Nuestras **notas de estudio** del paper: ideas centrales, movimiento browniano, tasa de descuento y CAPM, estáticas comparativas, cómo leer las tablas de la Sección IV, el apéndice y el guion de la exposición. Es el andamiaje con el que estudiamos, no la entrega. |
 | `material/` | Material de la materia: el programa de Finanzas Matemáticas. *(El PDF del paper original queda fuera del repo por copyright de terceros.)* |
+| `borradores/` | Versiones de trabajo previas a la entrega: el pitch escrito (`.docx`) y la presentación en PowerPoint (`.pptx`). |
 | `compilar.sh` | Script que compila la presentación (ver abajo). |
 | `index.html` | Redirección a la visualización (para GitHub Pages). |
 
@@ -43,7 +44,8 @@ Requiere [Tectonic](https://tectonic-typesetting.github.io/) instalado en
 ```
 
 El PDF resultante (`Presentación McDonald-Siegel vN.pdf`) se genera en la raíz. El
-script además avisa si algún contenido se desborda del pie de una slide.
+script además avisa si algún contenido se desborda del pie de una slide. *(El
+entregable final se subió renombrado a `Presentación McDonald-Siegel - Grupo 2.pdf`.)*
 
 ## El paper
 
