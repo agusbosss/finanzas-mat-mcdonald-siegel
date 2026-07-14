@@ -61,17 +61,6 @@ del calendario y no hay fórmula cerrada: se necesitan métodos numéricos.
 - Elias lo repite en E8 "Aclaraciones" (citando a Ingersoll, 1977).
 - La misma afirmación aparece en las dos partes.
 
-**1.6 Las limitaciones del modelo, dos veces**
-La nueva sección "Literatura posterior" (pedida por Mariano) abre con
-"Limitaciones del modelo base": el costo F como MBG perpetuo, la inversión
-indivisible ("lumpy") y la falta de flexibilidad intermedia.
-- Esas mismas limitaciones ya están en las Conclusiones de Agustín (MBG,
-  inversión indivisible, irreversibilidad total).
-- Se repiten casi 1:1, y encima quedan seguidas en el deck (Conclusiones y,
-  justo después, la sección nueva). Hay que decidir en qué lugar quedan (una
-  opción: sacarlas de Conclusiones y desarrollarlas solo en la sección nueva,
-  que las conecta con los papers que las resolvieron).
-
 ---
 
 ## 2. Pendiente final
