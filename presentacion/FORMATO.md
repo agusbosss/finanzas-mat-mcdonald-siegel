@@ -11,11 +11,54 @@ implementada en `tema-slutsky.sty`. Referencia para escribir contenido.
 | `navy` | `#002060` | barras sup/inf, títulos, texto del pie |
 | `gristitulo` | `#E7E6E6` | banda del título (y banda de portada) |
 | `grispie` | `#D0CECE` | mitad derecha de barras sup/inf |
-| `rojo` | `#EA0000` | matemática: objeto que se define / resultado |
-| `azul` | `#0634B6` | matemática: expresiones, RHS |
+| `rojo` | `#EA0000` | mat.: **V** + el resultado de la slide (X, C\*, ε…); prosa: punchline. Ver §Color |
+| `azul` | `#0634B6` | mat.: **F**, parámetros y expresiones (el default). Ver §Color |
 | `azulclaro` | `#0070C0` | borde de cajas, énfasis azul brillante, "Caso n" |
 | `celeste` | `#E0F7FF` | relleno de cajas clave |
 | `magenta` | `#F21AD8` | énfasis rosa (raro; para contrastar 2 conceptos) |
+
+## Color y resaltado (convención afinada — la regla que seguimos)
+
+**Matemática — qué va en rojo y qué en azul:**
+- **Azul (`\az`) es el default** de toda la matemática: F, los parámetros
+  (α, σ, δ, ρ, λ, μ, r, k, b…) y las expresiones / lados derechos completos.
+- **Rojo (`\rj`) marca solo dos cosas** (las que el público debe seguir):
+  1. **V** — el activo/variable central (y su diferencial `dV/V`).
+  2. **El resultado de la slide** — la incógnita que se despeja: X, C\*, ε
+     (y μ cuando es el lado izquierdo que se deriva).
+- **Comparar dos cosas → dos colores, cada hilo entero.** Si la slide compara
+  dos objetos paralelos (típico: los MBG de V y de F), se colorea **toda** la
+  ecuación de cada uno con su color, operadores incluidos:
+  `\rj{\frac{dV}{V} = \alpha_v\,dt + \sigma_v\,dz_v}` (rojo) y
+  `\az{\frac{dF}{F} = \alpha_f\,dt + \sigma_f\,dz_f}` (azul). Así se sigue el
+  hilo de cada variable.
+- **Operadores relacionales en negro.** `=`, `<`, `>`, `≥` y conectores
+  (`⟹`, `→`) van en **negro**, entre operandos coloreados, para que una
+  derivación no quede con signos `=` de tres colores. (Única excepción: dentro
+  de un hilo V/F comparado, el operador va del color del hilo.) Los `+`/`−`
+  binarios dentro de una expresión de un solo color se quedan de ese color.
+  - **Gotcha de espaciado:** para operador negro Y espaciado correcto, escribir
+    la condición como **un solo grupo math** con el color adentro:
+    `$\rj{\varepsilon} > 1$` ✔  —  `\rj{$\varepsilon$}$>1$` ✘ (esto último pega
+    el operador y se ve "ε>1").
+- Asignaciones atómicas de parámetros (`σf = 0`, `β = 2/3`, `T = ∞`) se dejan
+  como una unidad de un color (no son derivaciones).
+
+**Resaltado en prosa — poco y con criterio:**
+- **`\concepto`** (azul claro, negrita itálica): un **término técnico, la
+  primera vez** que aparece. **Máximo 1–2 por slide.** Nunca resaltar todos
+  los ítems de una lista.
+- **`\resultado`** (rojo, negrita itálica): solo un **punchline / conclusión de
+  verdad**. El énfasis blando ("vale más", "métodos numéricos", "versátil") va
+  en `\emph` o plano.
+- **Rótulos de lista → `\textbf`** (negrita negra, sin color): cuando cada ítem
+  arranca con un término (lista tipo glosario / definiciones), poner el rótulo
+  en negrita en vez de colorear toda la lista.
+- **`\emph`** (itálica) para énfasis suave.
+- **Dosis pareja entre expositores** (que uno no tenga 18 resaltados y otro 0).
+  Regla de pulgar: **≤2 resaltados de color por slide**.
+- Definidos en el tema pero que en la práctica **no** usamos: `\conceptonavy`,
+  `\conceptomg`, `\mg`, `\nv`, `\caso` y el color magenta.
 
 ## Geometría (fracciones de la slide 4:3)
 
@@ -45,9 +88,9 @@ implementada en `tema-slutsky.sty`. Referencia para escribir contenido.
 
 - **2–4 bullets por slide**, wordy (2–3 líneas c/u), con mucha separación vertical.
   Bullets negros redondos "•" en ambos niveles.
-- **Matemática coloreada semánticamente**: lo que se define / el resultado en rojo
-  (`x₁(p₁,p₂,I)`, `V*`), la expresión/el RHS en azul. En derivaciones largas alterna
-  rojo/azul por paso para destacar qué se sustituye. Inline math también coloreada.
+- **Matemática coloreada semánticamente** (nuestra regla afinada está en §"Color y
+  resaltado"): el default es azul; el rojo marca **V** y el **resultado** de la slide;
+  los operadores relacionales van en negro. Inline math también coloreada.
 - **Ecuaciones display**: centradas, notablemente más grandes que el texto, sin numerar.
 - **Énfasis en prosa**: *negrita itálica coloreada* — azul brillante para el concepto
   que se está definiendo, rojo para nombres/resultados clave ("Ecuación de Slutsky"),
@@ -96,6 +139,17 @@ implementada en `tema-slutsky.sty`. Referencia para escribir contenido.
   paper va en un comentario LaTeX arriba del frame, como guía interna.
 - **Nunca escribir de dónde sale el paper** (journal, volumen, páginas): ni en la
   portada ni en ninguna slide. Para referenciarlo: autores y año, nada más.
+- **Títulos que describen el contenido, no etiquetas internas.** El título dice qué
+  ve el público, no la sección/jerga del paper. (Ej.: "La sección: qué se deriva" ✘ →
+  "El desarrollo en tres pasos" ✔.)
+- **Consistencia numérica.** Los números en slides de cierre/resumen tienen que
+  coincidir con los de las tablas mostradas antes (ej.: C\* = 1.86 del caso base, no un
+  1.81 sacado de otras notas). Verificar contra las tablas propias.
+- **Sumario / índice**: mapea el arco completo, ~un punto por bloque de orador.
+- **Slide de conclusiones — de lo conceptual a lo punchy, terminando fuerte:**
+  (1) la tesis en una línea; (2) el aporte / la regla técnica que conecta con lo
+  mostrado; (3) la cifra o cita como **clímax** (no como apertura); (4) el "para
+  llevar" en una sola frase, y que sea **lo último**.
 
 ## Estructura por integrante
 
@@ -107,6 +161,17 @@ El deck está dividido en 4 partes con slides divisorias `\divisoria{Nombre}`
 2. **Elias Hwang** — desarrollo hasta el modelo general y comentarios.
 3. **Mariano Sanchez** — tasa de descuento y saltos en Vt; después, papers posteriores.
 4. **Agustín Bossart** — ejemplos con parámetros, ejemplo con monopolio, conclusiones.
+
+## Coordinación entre partes (deck grupal)
+
+- **Solapamientos e inconsistencias.** Con el deck repartido entre varias personas
+  aparecen temas cubiertos dos veces y símbolos con dos nombres/formas (ej.: un mismo
+  parámetro con sombrero en una parte y barra en otra). Se llevan anotados en
+  `NOTAS-CONFLICTOS.md` (raíz del repo) como "puntos a revisar", para charlarlos con el
+  equipo antes de cerrar; se sacan los que se resuelven. Se puede exportar a PDF con
+  tectonic para compartir el resumen.
+- **Notación única.** Un mismo objeto → un solo símbolo y un solo nombre en todo el
+  deck. Si el paper usa dos formas equivalentes, dejar explícito que son la misma.
 
 ## Estructura de archivos
 
