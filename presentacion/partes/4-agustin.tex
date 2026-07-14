@@ -286,26 +286,6 @@
     valor de la opción no está definido.}
 \end{frame}
 
-% (guion §5 y §6 — asteriscos y contraejemplo)
-\begin{frame}{Los asteriscos de la Tabla IV}
-  Al variar \az{$\sigma_\theta$} se mueven a la vez \az{$\sigma_v$},
-  \az{$\alpha_v$} (Jensen) y \az{$\hat{\alpha}_v$} (CAPM). En la celda
-  $\sigma_\theta^2 = 0.20$, $\alpha_\theta = 0$, $\rho_{\theta m} = 0$:
-  \begin{ec}
-    \rj{\delta_v} = \underbrace{\az{0.05}}_{r}
-      + \underbrace{\az{0}}_{\text{CAPM}}
-      - \underbrace{\az{0}}_{\gamma\alpha_\theta}
-      - \underbrace{\az{0.075}}_{\frac{1}{2}\gamma(\gamma-1)\sigma_\theta^2}
-      = \rj{-0.025} < 0
-  \end{ec}
-  El término de Jensen supera al retorno requerido: esperar siempre suma y
-  la inversión nunca se concreta.
-  \par\vspace{2mm}
-  Con $\eta = 1.0001$, $\alpha_\theta = -0.03$ y $\rho_{\theta m} = 0.95$:
-  subir \az{$\sigma_\theta^2$} de $0.0025$ a $0.0050$ \emph{reduce} la
-  opción de \rj{$0.0293$} a \rj{$0.0286$}.
-\end{frame}
-
 % (guion §6 — autocrítica del paper)
 \begin{frame}{Los límites del supuesto browniano}
   La demanda es una variable real: bajo MBG su incertidumbre crece
